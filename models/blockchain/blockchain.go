@@ -1,6 +1,5 @@
 //写与区块链相关的实体
 
-
 package blockchain
 
 //区块信息

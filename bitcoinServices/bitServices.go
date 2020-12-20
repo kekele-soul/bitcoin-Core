@@ -1,3 +1,5 @@
+//此处写RPC通信方法
+
 package bitcoinServices
 
 import (
@@ -6,8 +8,6 @@ import (
 	"bitcoin-Core/models/blockchain"
 	"strings"
 )
-
-//此处写RPC通信方法
 
 //获取RPCURL链接节点的最高区块Hash
 func GetBestBlockHahs() string {

@@ -47,9 +47,6 @@ func MD5HashReader(reader io.Reader) (string, error) {
 	return hex.EncodeToString(hashBytes), nil
 }
 
-/**
- *sha256哈希应用
- */
 
 /**
 字节进行sha256哈希

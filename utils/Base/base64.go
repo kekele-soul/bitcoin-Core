@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 )
 
+
 //base64编码
 func Base64Encode(data []byte) []byte {
 	encoding := base64.StdEncoding
@@ -30,3 +31,4 @@ func Dase64Decode(data []byte) []byte {
 func Base64Str(msg string) string {
 	return base64.StdEncoding.EncodeToString([]byte(msg))
 }
+

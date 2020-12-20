@@ -4,6 +4,7 @@ package Convert
 该包封装为将int64和string转化为byte字节切片工具包
  */
 
+
 import (
 	"bytes"
 	"encoding/binary"

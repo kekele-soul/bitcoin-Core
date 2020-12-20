@@ -81,6 +81,7 @@ func DoPost(url string, header map[string]string, body io.Reader) *rpc.RPCResult
 	return rpcResult
 }
 
+
 //设置请求头
 func RequestHeaders() map[string]string {
 	header := make(map[string]string)

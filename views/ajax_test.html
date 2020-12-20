@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax_tests</title>
+    <style>
+        #first {
+            background-color: red;
+            height: 300px;
+            width: 300px;
+            float: left;
+        }
+
+        #second {
+            background-color: black;
+            margin-left: 10px;
+            height: 300px;
+            width: 300px;
+            float: left;
+        }
+        #third{
+            background-color: yellow;
+            margin-left: 10px;
+            height: 300px;
+            width: 300px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Ajax使用（仅供参考）</h1>
+
+
+<div id="first">
+
+</div>
+
+<div id="second">
+
+</div>
+
+<div id="third">
+
+</div>
+
+</body>
+<script type="text/javascript">
+
+
+    var div1 = document.getElementById("first");
+    var div2 = document.getElementById("second");
+    var div3 = document.getElementById("third");
+
+    div1.onclick = function () {
+        Ajax("GET", "./directory/test.txt", function (xhr) {
+                div3.innerHTML = xhr.responseText;
+            }
+        ,function (xhr) {
+            alert("请求失败")
+            });
+    };
+    div2.onclick = function () {
+        Ajax("GET", "./directory/test2.txt", function (xhr) {
+                div3.innerHTML = xhr.responseText;
+            }
+            , function (xmlHttpRequest) {
+            alert("请求失败")
+
+            });
+
+    };
+
+    //js实现ajax
+    /**
+     * 该方法用于创建ajax的实例
+     * @param type 请求类型
+     * @param url 要请求信息的路径
+     * @param success 请求成功
+     * @param error 错误
+     * @constructor
+     */
+    function Ajax(type, url, success, error) {
+        //判断浏览器版本
+        var xhr;
+        if (window.XMLHttpRequest) {
+            //
+            xhr = new XMLHttpRequest();
+        } else {
+            xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //判断请求方式
+        if (type === "GET") {
+            xhr.open(type, url, true);
+            xhr.send()
+        } else {
+            xhr.open(type, url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send()
+        }
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    success(xhr);
+                } else {
+                    error(xhr)
+                }
+            }
+        }
+    }
+</script>
+
+
+
+<script>
+    // jquery实现ajax
+    $.ajax({
+        url:'' , //所要请求的信息
+        data:{
+            sid: '',
+            sort:''
+        },
+        type :'post',
+        datatype: 'json',
+        success: function (json) {
+            if (json) {
+                alert("请求成功")
+            }
+
+        }
+    })
+</script>
+</html>
