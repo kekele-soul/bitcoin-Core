@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+
+        body {
+            width: 100%;
+        }
+
+        }
+        #box {
+            width: 500px;
+            height: 600px;
+            border: 1px gainsboro solid;
+            margin: 40px auto;
+            border-radius: 10px;
+        }
+
+        #box img {
+            width: 100px;
+            height: 100px;
+            padding-left: 200px;
+            padding-top: 50px;
+        }
+
+        #GoWeb {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        #F {
+            text-align: center;
+            font-size: 18px;
+            padding-top: 5px;
+        }
+
+        #text {
+            padding-left: 100px;
+            padding-top: 25px;
+        }
+
+        /* .b{
+            width: 300px;
+            height: 45px;
+            border-radius: 4px;
+            border: 1px  black  solid;
+            text-align: center;
+            line-height: 40px;
+
+        }
+        .c{
+            width: 300px;
+            height: 45px;
+            border-radius: 4px;
+            border: 1px gainsboro solid;
+            text-align: center;
+            line-height: 40px;
+            margin-top: 10px;
+        } */
+        .c {
+            padding-top: 15px;
+        }
+
+        .a {
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+
+        }
+
+        #submit {
+            width: 300px;
+            height: 44px;
+            background-color: #50CA51;
+            border-radius: 2px;
+            font-size: 18px;
+            cursor: pointer;
+
+        }
+
+        #sub {
+            width: 200px;
+            height: 30px;
+            padding-top: 70px;
+        }
+
+        #daohang {
+            padding-top: 40px;
+            padding-left: 40px;
+        }
+
+        #daohang a {
+            padding-right: 3px;
+            border-right: 1.5px black solid;
+            color: #1A73E8;
+        }
+
+        #tele {
+
+            padding-right: 675px;
+            padding-top: 15px; /*根据你自己电脑去调整px最底层*/
+            color: gray;
+            float: right;
+            font-size: 18px; /*根据你自己电脑去调整px居中*/
+
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <!--			换个图片-->
+    <img src="img/1.jpg"/>
+    <p id="GoWeb">Cookie使用（仅供参考）</p>
+    <p id="F">F组</p>
+    <div id="text">
+        <!--         <div class="b"> -->
+        <input type="text" value="" name="username" class="a" placeholder="请输入手机号"/>
+        <!--         </div> -->
+        <div class="c">
+            <input type="password" value="" name="password" class="a " placeholder="请输入密码"/>
+        </div>
+
+        <div id="sub">
+            <input type="button" value="登录" id="submit"/>
+        </div>
+        <!--        默认七天免登陆-->
+        <div id="daohang">
+            <a href="#">找回密码</a>
+            <a href="#">邮箱登录</a>
+            <a href="#" style="border-right: none;">快速注册</a>
+        </div>
+    </div>
+</div>
+<div>
+    <p id="tele">联系电话：88888888</p>
+</div>
+</body>
+<!--<script src="jquery-3.1.1.js"></script>-->
+<script type="text/javascript">
+
+    var input = document.getElementsByTagName("input");
+
+    if (getCookie("username")) {
+        input[0].value = getCookie("username");
+        input[1].value = getCookie("password");
+    }
+
+    input[2].onclick = function () {
+        var username = input[0].value;
+        var password = input[1].value;
+
+        setCookie("username", username, 1);
+        setCookie("password", password, 1);
+    };
+
+
+    /*
+      cookie机制：
+    1、  客户端发送一个请求到服务器
+    2、  服务器发送一个HttpResponse响应到客户端，其中包含Set-Cookie的头部
+    3、  客户端保存cookie，之后向服务器发送请求时，HttpRequest请求中会包含一个Cookie的头部
+    4、  服务器返回响应数据
+     */
+
+    /**
+     * 该方法用于生成cookie实例
+     * @param cname 要传入的数据类型
+     * @param cvalue 要传入的参数
+     * @param day 设置该方法生命周期
+     */
+    function setCookie(name, value, day) {
+        var date = new Date();
+        date.setDate(date.getDate() + day);
+        // var expires = "expires=" + date.toDateString();
+        // document.cookie = cname + "=" + cvalue + ";" + expires;
+        document.cookie = name + "=" + value + ";expires=" + date;
+    }
+
+    /**
+     * 该方法用于获取cookie实例
+     * @param cname 要持久保存的数据类型
+     * @returns {string} 返回获取的长度，如未获取到则返回空
+     */
+    function getCookie(name) {
+        var str = document.cookie;
+        var arr = str.split("; ");
+
+        for (var i = 0; i < arr.length; i++) {
+            var arr1 = arr[i].split("=");
+            if (arr1[0] = name) {
+                return arr1[1];
+            }
+        }
+        // var name = cname + "=";
+        // var can = document.cookie.split(';');
+        // for (var i = 0; i < can.length; i++) {
+        //     var c = can[i].trim();
+        //     if (c.indexOf(name) == 0) {
+        //         return c.substring(name.length, c.length);
+        //     }
+        //     return "";
+        // }
+    }
+
+    /**
+     * 该方法用于停止cookie的生命周期
+     */
+    function removecookie(name) {
+        setCookie(name, 1, -1)
+
+    }
+
+    /**
+     * 该方法用于检索cookie的值
+     */
+    // function checkCookie() {
+    //     var user = getCookie("username");
+    //     if (user != "") {
+    //         alert("检索cookie成功" + user)
+    //     } else {
+    //         user = prompt("请输入你的名字：", "");
+    //         if (user != "" && user != null) {
+    //             setCookie("username", user, 7)
+    //         }
+    //     }
+    // }
+</script>
+</html>
