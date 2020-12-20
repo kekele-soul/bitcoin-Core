@@ -25,3 +25,8 @@ func Dase64Decode(data []byte) []byte {
 	return dst[:n]
 
 }
+
+
+func Base64Str(msg string) string {
+	return base64.StdEncoding.EncodeToString([]byte(msg))
+}
