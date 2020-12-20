@@ -8,6 +8,8 @@ const (
 	RPCVERSION  = "2.0"
 )
 
+
+
 //Bitcoin Core 常用命令常量
 const (
 	GETBESTBLOCKHASH             = "getbestblockhash"
