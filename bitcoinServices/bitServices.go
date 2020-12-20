@@ -13,7 +13,7 @@ import (
 func GetBestBlockHahs() string {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.GETBESTBLOCKHAHS, paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.GETBESTBLOCKHASH, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
