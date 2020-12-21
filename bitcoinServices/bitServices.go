@@ -22,7 +22,7 @@ func GetBestBlockHahs() string {
 }
 
 //根据区块Hash获取区块信息
-func GetBlockInfo(blockHash string) blockchain.BlockInfo { //
+func GetBlockInfo(blockHash string) blockchain.BlockInfo {
 	paramsSlice := []interface{}{blockHash}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCK, paramsSlice)
@@ -59,6 +59,7 @@ func GetBlockInfo(blockHash string) blockchain.BlockInfo { //
 
 //获取区块链信息
 func GetBlockChainInfo() blockchain.BlockChainInfo {
+
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCKCHAININFO, paramsSlice)
