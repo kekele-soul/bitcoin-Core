@@ -2,6 +2,7 @@ package bitcoinServices
 
 import (
 	"bitcoin-Core/models/blockchain"
+	"bitcoin/entity"
 )
 
 type BlockChahin interface {
@@ -81,16 +82,57 @@ type Network interface {
 
 }
 
-
+//author : 陈浩亮  time ：2020/12/22
 //一个人完成以下两个接口
 //原始交易
 type Rawtransactions interface {
+	//分析psbt
+	Analyzepsbt(psbt string)
 
+	//合并结合pspt
+	Combinepsbt() entity.Combinepsbt
+
+	//合并结合原始交易
+	Combinerawtransaction() entity.Combinerawtransaction
+
+	//创建pspt
+	Createpsbt() entity.Createpsbt
+
+	//创建一个原始交易
+	Createrawtransaction() entity.Createrawtransaction
+
+	//找原始交易
+	Fundrawtransaction(hexstring string)
+
+	//发送原始交易信息
+	Sendrawtransaction() entity.Sendrawtransaction
+
+	//用私钥签名交易
+	Signrawtransactionwithkey() entity.Signrawtransactionwithkey
+
+	//测试连接池是否接受链接
+	Testmempoolaccept() entity.Testmempoolaccept
 }
 
 //工具
 type Util interface {
+	//创建多重签名需求
+	CreatemultisigNrequired() entity.CreatemultisigNrequired
 
+	//地址起源
+	Deriveaddresses() entity.Deriveaddresses
+
+	//估算费用
+	Estimate() entity.Estimate
+
+	//获取描述符信息
+	Getdescriptorinfo(descriptor string)
+
+	//用私钥对交易进行签名
+	Signmessagewithprivkey() entity.Signmessagewithprivkey
+
+	//验证地址信息
+	Validateaddress(address string)
 }
 
 
