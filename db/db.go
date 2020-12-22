@@ -1,3 +1,7 @@
+/*
+ *Author： Afei
+ *周二 12月 22 15：09 2020
+ */
 package db
 
 import (
@@ -11,7 +15,6 @@ import (
 )
 
 //用户名和密码等数据操作
-
 
 var Map_Name_Pwd map[string]string
 
@@ -65,6 +68,29 @@ func SaveUser(path string, name, pwd string) error {
 	return nil
 }
 
+//查询用户
+func Query(name string, pwd string) (bool, error) {
+	err := Init()
+	if err != nil {
+		return false, err
+	}
+	mp := Map_Name_Pwd
+
+	//判断用户是否存在
+	pwdBase := mp[name]
+	if pwdBase == "" {
+		return false, errors.New("用户不存在")
+	}
+
+	//对用户的密码pwd进行hash和base编码
+	pwdBytes := Hash.Sha256Hash([]byte(pwd))
+	pwdBase64Bytes := Base.Base64Encode(pwdBytes)
+	pwdBaseStr := string(pwdBase64Bytes)
+
+	//比较密码是否相等并返回结果
+	return pwdBase == pwdBaseStr, nil
+}
+
 //初始化map
 func Init() error {
 	Map_Name_Pwd = make(map[string]string)
@@ -73,6 +99,7 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+
 	//建立缓冲区，把文件内容放到缓冲区中
 	buf := bufio.NewReader(f)
 	for {
@@ -88,7 +115,7 @@ func Init() error {
 		br := strings.Split(f1, ",")
 
 		for i := 0; i < len(br); i++ {
-			if i == 1{
+			if i == 1 {
 				if Map_Name_Pwd[br[0]] == "" {
 					Map_Name_Pwd[br[0]] = br[i]
 				}
@@ -96,5 +123,5 @@ func Init() error {
 		}
 
 	}
+	return nil
 }
-
