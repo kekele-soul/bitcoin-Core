@@ -2,15 +2,15 @@ package utils
 
 //Bitcoin Core 配置常量
 const (
-	RPCUSER     = ""
-	RPCPASSWORD = ""
+	RPCUSER     = "user"
+	RPCPASSWORD = "pwd"
 	RPCURL      = "http://127.0.0.1:"
 	RPCVERSION  = "2.0"
 )
 
 //用户账号密码文件路径
 const (
-	PATH = "../db/user.txt"
+	PATH = "db/user.txt"
 )
 
 //Bitcoin Core 常用命令常量
