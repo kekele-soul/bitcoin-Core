@@ -19,13 +19,22 @@ func (l *LoginController) Post() {
 	err := l.ParseForm(&user)
 	if err != nil {
 		l.Ctx.WriteString("用户解析失败")
+		return
 	}
 
-	err = user.QueryUser()
+	b,err := user.QueryUser()
 	if err != nil {
 		l.Ctx.WriteString("用户信息查询失败，请检查账户信息！")
 		return
 	}
+	if b == false {
+		l.Ctx.WriteString("用户或密码错误请重试！")
+		return
+	}
+	if b== true {
+		l.TplName = "home.html"
 
-	l.TplName = "home.html"
+	}
+
+
 }

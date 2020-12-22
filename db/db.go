@@ -5,6 +5,7 @@
 package db
 
 import (
+	"bitcoin-Core/utils"
 	"bitcoin-Core/utils/Base"
 	"bitcoin-Core/utils/Hash"
 	"bufio"
@@ -39,7 +40,7 @@ func SaveUser(path string, name, pwd string) error {
 	//使用完毕，需要关闭文件
 	defer f.Close()
 	//初始化map
-	err = Init(path)
+	err = Init()
 	if err != nil {
 		return err
 	}
@@ -61,7 +62,7 @@ func SaveUser(path string, name, pwd string) error {
 		return err
 	}
 	//初始化map
-	err = Init(path)
+	err = Init()
 	if err != nil {
 		return err
 	}
@@ -92,10 +93,10 @@ func Query(name string, pwd string) (bool, error) {
 }
 
 //初始化map
-func Init(path string) error {
+func Init() error {
 	Map_Name_Pwd = make(map[string]string)
 
-	f, err := os.Open(path)
+	f, err := os.Open(utils.PATH)
 	if err != nil {
 		return err
 	}

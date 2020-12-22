@@ -21,9 +21,6 @@ func (r *RegisterController) Post() {
 		r.Ctx.WriteString("用户解析失败")
 		return
 	}
-	fmt.Println(user.UserName)
-	fmt.Println(user.Password)
-
 
 	err = user.SaveUser()
 	if err != nil {
