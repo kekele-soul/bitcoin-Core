@@ -26,8 +26,6 @@
             width: 300px;
             float: left;
         }
-
-        .
     </style>
 </head>
 <body>
@@ -56,7 +54,7 @@
     var div3 = document.getElementById("third");
 
     div1.onclick = function () {
-        Ajax("GET", "./directory/test.txt", function (xhr) {
+        Ajax("GET", "./test.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
             , function (xhr) {
@@ -64,7 +62,7 @@
             });
     };
     div2.onclick = function () {
-        Ajax("GET", "./directory/test2.txt", function (xhr) {
+        Ajax("GET", "./test2.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
             , function (xhr) {

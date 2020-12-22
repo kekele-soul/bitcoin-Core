@@ -1,11 +1,12 @@
 var input = document.getElementsByTagName("input");
+var button = document.getElementById("btn");
 
 if (getCookie("username")) {
     input[0].value = getCookie("username");
     input[1].value = getCookie("password");
 }
 
-input[2].onclick = function () {
+button.onclick = function () {
     var username = input[0].value;
     var password = input[1].value;
 

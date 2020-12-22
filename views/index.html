@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
-<title>GoWeb</title>
+<title>登录</title>
 
 <link rel="stylesheet" href="../static/css/style.css">
 
@@ -34,7 +34,7 @@
 			<div class="finger"></div>
 		</div>
 	</div>
-	<form>
+	<form method="post" action="/index">
 		<div class="hand"></div>
 		<div class="hand rgt"></div>
 		<h1>用户登录</h1>
@@ -46,7 +46,13 @@
 			<input id="password" type="password" required="required" class="form-control">
 			<label class="form-label">密码</label>
 			<!--<p class="alert">验证未通过！</p>-->
-			<input class="btn" type="button" value="登录">
+
+			<button id="btn" class="btn" >注册</button>
+		</div>
+		<div id="daohang">
+			<a href="#">找回密码</a>
+			<a href="#">邮箱登录</a>
+			<a href="./register.html" style="border-right: none;">快速注册</a>
 		</div>
 	</form>
 </div>

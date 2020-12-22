@@ -36,7 +36,7 @@ func SaveUser(path string, name, pwd string) error {
 	//使用完毕，需要关闭文件
 	defer f.Close()
 	//初始化map
-	err = Init()
+	err = Init(path)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func SaveUser(path string, name, pwd string) error {
 		return err
 	}
 	//初始化map
-	err = Init()
+	err = Init(path)
 	if err != nil {
 		return err
 	}
@@ -66,10 +66,10 @@ func SaveUser(path string, name, pwd string) error {
 }
 
 //初始化map
-func Init() error {
+func Init(path string) error {
 	Map_Name_Pwd = make(map[string]string)
 
-	f, err := os.Open("./demo.txt")
+	f, err := os.Open(path)
 	if err != nil {
 		return err
 	}
