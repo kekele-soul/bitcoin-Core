@@ -27,7 +27,7 @@ func Dase64Decode(data []byte) []byte {
 
 }
 
-
+//Base64编码字符串,并返回编码后的字符串
 func Base64Str(msg string) string {
 	return base64.StdEncoding.EncodeToString([]byte(msg))
 }
