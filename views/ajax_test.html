@@ -18,13 +18,16 @@
             width: 300px;
             float: left;
         }
-        #third{
+
+        #third {
             background-color: yellow;
             margin-left: 10px;
             height: 300px;
             width: 300px;
             float: left;
         }
+
+        .
     </style>
 </head>
 <body>
@@ -42,10 +45,11 @@
 <div id="third">
 
 </div>
-
+<input type="color" name = "colorselect">
 </body>
 <script type="text/javascript">
-
+    var color = document.getElementsByName("colorselect")[0]; //获取该元素
+    color.onchange = function(){document.body.bgColor = color.value}; //onchange事件实现实
 
     var div1 = document.getElementById("first");
     var div2 = document.getElementById("second");
@@ -55,16 +59,16 @@
         Ajax("GET", "./directory/test.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
-        ,function (xhr) {
-            alert("请求失败")
+            , function (xhr) {
+                alert("请求失败")
             });
     };
     div2.onclick = function () {
         Ajax("GET", "./directory/test2.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
-            , function (xmlHttpRequest) {
-            alert("请求失败")
+            , function (xhr) {
+                alert("请求失败")
 
             });
 
@@ -111,23 +115,23 @@
 </script>
 
 
-
+<script src="../static/js/jquery-3.1.1.js"></script>
 <script>
     // jquery实现ajax
-    $.ajax({
-        url:'' , //所要请求的信息
-        data:{
-            sid: '',
-            sort:''
-        },
-        type :'post',
-        datatype: 'json',
-        success: function (json) {
-            if (json) {
-                alert("请求成功")
-            }
-
-        }
-    })
+    // $.ajax({
+    //     // url:'$(blockchain)/blockchain/BlockInfo/Hash' , //所要请求的信息
+    //     data:{
+    //         sid: '',
+    //         sort:''
+    //     },
+    //     type :'post',
+    //     datatype: 'json',
+    //     success: function (json) {
+    //         if (json) {
+    //             alert("请求成功")
+    //         }
+    //
+    //     }
+    // })
 </script>
 </html>
