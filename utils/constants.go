@@ -4,7 +4,7 @@ package utils
 const (
 	RPCUSER     = "user"
 	RPCPASSWORD = "pwd"
-	RPCURL      = "http://127.0.0.1:"
+	RPCURL      = "http://127.0.0.1:8332"
 	RPCVERSION  = "2.0"
 )
 
