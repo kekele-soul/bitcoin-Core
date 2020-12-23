@@ -10,8 +10,9 @@ if (getCookie("username")) {
     var username = input[0].value;
     var password = input[1].value;
 
-    setCookie("username", username, 1);
-    setCookie("password", password, 1);
+    setCookie("username", username, 7);
+    setCookie("password", password, 7);
+    alert("已成功设置七天免登录")
 };
 
 
