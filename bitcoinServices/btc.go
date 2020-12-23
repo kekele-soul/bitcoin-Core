@@ -6,13 +6,13 @@ import (
 
 type BlockChahin interface {
 	//获取最高区块Hash
-	GetBestBlockHahs() string
+	GetBestBlockHash() string
 
 	//根据区块Hash获取区块信息
 	GetBlockInfoByHash(blockHash string) blockchain.BlockInfo
 
 	//根据区块hash获取区块Info
-	GetBlockByHeight(height int) blockchain.BlockInfo
+	GetBlockInfoByHeight(height int) blockchain.BlockInfo
 
 	//获取区块链信息
 	GetBlockChainInfo() blockchain.BlockChainInfo
