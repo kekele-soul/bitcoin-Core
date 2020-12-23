@@ -10,7 +10,10 @@ const (
 
 //用户账号密码文件路径
 const (
-	PATH = "db/user.txt"
+	MailBox_Name_PATH = "db/mailBox_Name.txt"
+	MailBox_Pwd_PATH  = "db/mailBox_Pwd.txt"
+	Name_MailBox_PATH = "db/name_MailBox.txt"
+	Name_Pwd_PATH     = "db/name_Pwd.txt"
 )
 
 //Bitcoin Core 常用命令常量
