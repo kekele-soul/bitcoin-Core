@@ -59,3 +59,49 @@ type BlockChahin interface {
 	//获取回收内存信息
 	GetMempoolInfo() blockchain.MempoolInfo
 }
+
+//一个人完成以下四个接口
+//控制
+type Control interface {
+
+}
+
+//生产
+type Generating interface {
+
+}
+
+//矿工
+type Mining interface {
+
+}
+
+//网络
+type Network interface {
+
+}
+
+
+//一个人完成以下两个接口
+//原始交易
+type Rawtransactions interface {
+
+}
+
+//工具
+type Util interface {
+
+}
+
+
+//两人合作完成下面一个接口
+//钱包
+type Wallet interface {
+
+}
+
+
+//消息队列
+type Zmq interface {
+
+}
