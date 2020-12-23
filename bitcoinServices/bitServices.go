@@ -77,7 +77,7 @@ func (bc btcSer) GetBlockInfoByHash(blockHash string) blockchain.BlockInfo {
 }
 
 //根据区块hash获取区块Info
-func (bc btcSer) GetBlockByHeight(height int) blockchain.BlockInfo {
+func (bc btcSer) GetBlockInfoByHeight(height int) blockchain.BlockInfo {
 	blockInfo := blockchain.BlockInfo{}
 	if float64(height) > bc.GetBlockCount() {
 		return blockInfo
