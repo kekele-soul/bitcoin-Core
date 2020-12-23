@@ -4,6 +4,7 @@ package blockchain
 
 //=============== begin:BlockInfo ===============//
 //区块信息
+
 type BlockInfo struct {
 	Hash              string
 	Confirmations     float64

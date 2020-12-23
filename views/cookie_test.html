@@ -145,7 +145,8 @@
         </div>
 
         <div id="sub">
-            <input type="button" value="登录" id="submit"/>
+           <!-- <input type="button" value="登录" id="submit"/> -->
+            <button onclick="btn()" id="submit" >登录</button>
         </div>
         <!--        默认七天免登陆-->
         <div id="daohang">
@@ -164,12 +165,13 @@
 <script type="text/javascript">
     var input = document.getElementsByTagName("input");
 
+
     if (getCookie("username")) {
         input[0].value = getCookie("username");
         input[1].value = getCookie("password");
     }
 
-    input[2].onclick = function () {
+     function btn () {
         var username = input[0].value;
         var password = input[1].value;
 
