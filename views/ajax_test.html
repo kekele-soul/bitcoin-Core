@@ -12,7 +12,7 @@
         }
 
         #second {
-            background-color: black;
+            background-color: green;
             margin-left: 10px;
             height: 300px;
             width: 300px;
@@ -38,7 +38,7 @@
 </div>
 
 <div id="second">
-
+{{/*    <iframe src='http://localhost:63342/bitcoin-Core/views/test.txt'></iframe>*/}}
 </div>
 
 <div id="third">
@@ -52,7 +52,8 @@
     var div3 = document.getElementById("third");
 
     div1.onclick = function () {
-        Ajax("GET", "./test.html", function (xhr) {
+
+            Ajax("GET", "http://localhost:8080/views/test.html", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
             , function (xhr) {
@@ -60,7 +61,9 @@
             });
     };
     div2.onclick = function () {
-        Ajax("GET", "./test2.txt", function (xhr) {
+
+        //$("#second").load("test.txt")
+        Ajax("GET", "http://localhost:8080/views/test.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
             , function (xhr) {

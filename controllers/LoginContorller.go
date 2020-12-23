@@ -10,7 +10,7 @@ type LoginController struct {
 	beego.Controller
 }
 
-func (l *LoginController) Get()  {
+func (l *LoginController) Get() {
 	l.TplName = "index.html"
 }
 
@@ -23,9 +23,7 @@ func (l *LoginController) Post() {
 		return
 	}
 
-
-
-	b,err := user.QueryUser()
+	b, err := user.QueryUser()
 	if err != nil {
 		fmt.Println(err.Error())
 		l.Ctx.WriteString("用户信息查询失败，请检查账户信息！")
@@ -35,10 +33,9 @@ func (l *LoginController) Post() {
 		l.Ctx.WriteString("用户或密码错误请重试！")
 		return
 	}
-	if b== true {
+	if b == true {
 		l.TplName = "home.html"
 
 	}
-
 
 }
