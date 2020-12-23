@@ -184,7 +184,7 @@ func SaveMailBoxPwd(mailBox, pwd, mame string) error {
 	}
 
 	if Map_Name_Pwd[mailBox] != "" {
-		str := fmt.Sprintf("+++注册失败,邮箱:%v 已存在!", mailBox)
+		str := fmt.Sprintf("注册失败,邮箱:%v 已存在!", mailBox)
 		return errors.New(str)
 	}
 	pwdBytes := Hash.Sha256Hash([]byte(pwd))
@@ -208,7 +208,6 @@ func SaveMailBoxPwd(mailBox, pwd, mame string) error {
 func SaveNameMailBox(name, mailBox string) error {
 	f_Name_MailBox, err := os.OpenFile(utils.Name_MailBox_PATH, os.O_WRONLY, 0644) //传递文件路径
 	if err != nil {
-		fmt.Println("err = ", err, )
 		return err
 	}
 	Name_MailBox_n, err := f_Name_MailBox.Seek(0, 2)
@@ -241,7 +240,6 @@ func SaveNameMailBox(name, mailBox string) error {
 func SaveMailBoxName(mailBox, name string) error {
 	f_MailBox_Name, err := os.OpenFile(utils.MailBox_Name_PATH, os.O_WRONLY, 0644) //传递文件路径
 	if err != nil {
-		fmt.Println("err = ", err, )
 		return err
 	}
 	MailBox_Name_n, err := f_MailBox_Name.Seek(0, 2)
