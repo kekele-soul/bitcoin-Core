@@ -58,7 +58,7 @@ func QueryByMail(mailBox string, pwd string) (bool, error) {
 	//判断邮箱是否存在
 	pwdBase := mp[mailBox]
 	if pwdBase == "" {
-		str := fmt.Sprintf("用户:%v不存在!",mailBox)
+		str := fmt.Sprintf("邮箱:%v不存在!",mailBox)
 		return false, errors.New(str)
 	}
 	//对用户的密码pwd进行hash和base编码
@@ -183,10 +183,10 @@ func SaveMailBoxPwd(mailBox, pwd, mame string) error {
 		return err
 	}
 
-	if Map_Name_Pwd[mailBox] != "" {
-		str := fmt.Sprintf("注册失败,邮箱:%v 已存在!", mailBox)
-		return errors.New(str)
-	}
+	//if Map_Name_Pwd[mailBox] != "" {
+	//	str := fmt.Sprintf("注册失败,邮箱:%v 已存在!", mailBox)
+	//	return errors.New(str)
+	//}
 	pwdBytes := Hash.Sha256Hash([]byte(pwd))
 	base64PwdBytes := Base.Base64Encode(pwdBytes)
 	pwdStr := string(base64PwdBytes)
@@ -326,8 +326,8 @@ func InitMap_MailBox_Pwd() error {
 
 		for i := 0; i < len(br); i++ {
 			if i == 1{
-				if Map_Name_Pwd[br[0]] == "" {
-					Map_Name_Pwd[br[0]] = br[i]
+				if Map_MailBox_Pwd[br[0]] == "" {
+					Map_MailBox_Pwd[br[0]] = br[i]
 				}
 			}
 		}
