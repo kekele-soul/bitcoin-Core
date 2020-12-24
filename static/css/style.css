@@ -1,4 +1,3 @@
-*,
 *:after,
 *:before {
     box-sizing: border-box;
@@ -11,6 +10,7 @@ body {
 }
 
 .dwo {
+
     position: absolute1;
     left: 50%;
     top: 50%;
