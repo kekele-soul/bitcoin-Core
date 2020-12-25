@@ -144,6 +144,7 @@ body {
 }
 
 .nav2-ul li a {
+    margin-top: 25px;
     display: block;
     width: 100px;
     height: 100px;
