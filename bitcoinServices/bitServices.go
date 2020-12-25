@@ -25,7 +25,7 @@ func GetBC() btcSer {
 }
 
 //获取最高区块Hash,成功返回最高区块Hash,否则返回空字符串
-func (bc btcSer) GetBestBlockHahs() string {
+func (bc btcSer) GetBestBlockHash() string {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBESTBLOCKHASH, paramsSlice)
@@ -77,7 +77,7 @@ func (bc btcSer) GetBlockInfoByHash(blockHash string) blockchain.BlockInfo {
 }
 
 //根据区块hash获取区块Info
-func (bc btcSer) GetBlockByHeight(height int) blockchain.BlockInfo {
+func (bc btcSer) GetBlockInfoByHeight(height int) blockchain.BlockInfo {
 	blockInfo := blockchain.BlockInfo{}
 	if float64(height) > bc.GetBlockCount() {
 		return blockInfo

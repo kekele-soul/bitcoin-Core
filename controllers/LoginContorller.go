@@ -10,7 +10,7 @@ type LoginController struct {
 	beego.Controller
 }
 
-func (l *LoginController) Get()  {
+func (l *LoginController) Get() {
 	l.TplName = "index.html"
 }
 
@@ -23,22 +23,38 @@ func (l *LoginController) Post() {
 		return
 	}
 
+	if user.UserName!= "" {
+		b, err := user.QueryUserByUserName()
+		if err != nil {
+			fmt.Println(err.Error())
+			l.Ctx.WriteString("用户信息查询失败，请检查账户信息！")
+			return
+		}
+		if b == false {
+			l.Ctx.WriteString("用户或密码错误请重试！")
+			return
+		}
+		if b == true {
+			l.TplName = "ajax_test.html"
 
+		}
 
-	b,err := user.QueryUser()
-	if err != nil {
-		fmt.Println(err.Error())
-		l.Ctx.WriteString("用户信息查询失败，请检查账户信息！")
-		return
 	}
-	if b == false {
-		l.Ctx.WriteString("用户或密码错误请重试！")
-		return
-	}
-	if b== true {
-		l.TplName = "home.html"
+	if user.MailBox!="" {
+		b, err := user.QueryUserByEmail()
+		if err != nil {
+			fmt.Println(err.Error())
+			l.Ctx.WriteString("用户信息查询失败，请检查账户信息！")
+			return
+		}
+		if b == false {
+			l.Ctx.WriteString("邮箱或密码错误请重试！")
+			return
+		}
+		if b == true {
+			l.TplName = "ajax_test.html"
 
+		}
 	}
-
 
 }

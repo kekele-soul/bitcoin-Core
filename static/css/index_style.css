@@ -1,16 +1,17 @@
+*,
 *:after,
 *:before {
     box-sizing: border-box;
 }
 
 body {
-    background: #cc3367;
+    background: url(../img/index.jpg) no-repeat;
+    background-size: 100% auto;
     text-align: center;
     font-family: 'Roboto', sans-serif;
 }
 
 .dwo {
-
     position: absolute1;
     left: 50%;
     top: 50%;
@@ -270,7 +271,7 @@ form.up {
 }
 
 h1 {
-    color: #FF4081;
+    color: #064598;
     font-weight: normal;
 }
 
@@ -279,18 +280,18 @@ h1 {
     padding: 5px;
     width: 150px;
     height: 35px;
-    border: 1px solid #FF4081;
+    border: 1px solid #064598;
     margin-top: 25px;
     cursor: pointer;
     -webkit-transition: 0.3s;
     transition: 0.3s;
-    box-shadow: 0 50px #FF4081 inset;
+    box-shadow: 0 50px #064598 inset;
     color: #fff;
 }
 
 .btn:hover {
     box-shadow: 0 0 #FF4081 inset;
-    color: #FF4081;
+    color: #064598;
 }
 
 .btn:focus {

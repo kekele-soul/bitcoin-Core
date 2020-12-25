@@ -1,17 +1,18 @@
 var input = document.getElementsByTagName("input");
-var id = document.getElementById("btn");
+
 
 if (getCookie("username")) {
     input[0].value = getCookie("username");
     input[1].value = getCookie("password");
 }
 
-id.onclick = function () {
+ function btn () {
     var username = input[0].value;
     var password = input[1].value;
 
-    setCookie("username", username, 1);
-    setCookie("password", password, 1);
+    setCookie("username", username, 7);
+    setCookie("password", password, 7);
+    alert("已成功设置七天免登录")
 };
 
 

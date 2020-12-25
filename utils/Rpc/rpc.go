@@ -30,11 +30,14 @@ func PrepareJSON(method string, params []interface{}) string {
 //执行POST请求
 func DoPost(url string, header map[string]string, body io.Reader) *rpc.RPCResult {
 	client := http.Client{}
+	rpcResult := &rpc.RPCResult{}
 
 	//新建一个请求
 	request, err := http.NewRequest("POST", url, body)
 	if err != nil {
-		return nil
+		rpcResult.Msg = "请求失败!"
+		rpcResult.Data = nil
+		return rpcResult
 	}
 
 	//设置请求头
@@ -47,12 +50,12 @@ func DoPost(url string, header map[string]string, body io.Reader) *rpc.RPCResult
 	//发送请求
 	response, err := client.Do(request)
 	if err != nil {
-		return nil
+		rpcResult.Msg = "请求失败!"
+		rpcResult.Data = nil
+		return rpcResult
 	}
 
 	code := response.StatusCode
-
-	rpcResult := &rpc.RPCResult{}
 
 	if code == http.StatusOK {
 		rpcResult.Code = code

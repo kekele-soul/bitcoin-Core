@@ -5,7 +5,8 @@
 }
 
 body {
-    background: #4186AC;
+    background: url(../img/register.jpg) no-repeat;
+    background-size: 100%;
     text-align: center;
     font-family: 'Roboto', sans-serif;
 }
@@ -247,6 +248,8 @@ body {
 }
 
 form {
+    border-radius: 25px;
+    opacity: 0.8;
     display: none;
     max-width: 400px;
     padding: 20px 40px;
@@ -264,13 +267,13 @@ form {
     border: 1px solid #eee;
 }
 
-form.up {
-    -webkit-transform: translateY(-180px);
-    transform: translateY(-180px);
-}
+/*form.up {*/
+/*    -webkit-transform: translateY(-180px);*/
+/*    transform: translateY(-180px);*/
+/*}*/
 
 h1 {
-    color: #FF4081;
+    color: #43569c;
     font-weight: normal;
 }
 
@@ -279,18 +282,18 @@ h1 {
     padding: 5px;
     width: 150px;
     height: 35px;
-    border: 1px solid #FF4081;
+    border: 1px solid #43569c;
     margin-top: 25px;
     cursor: pointer;
     -webkit-transition: 0.3s;
     transition: 0.3s;
-    box-shadow: 0 50px #FF4081 inset;
+    box-shadow: 0 50px #43569c inset;
     color: #fff;
 }
 
 .btn:hover {
-    box-shadow: 0 0 #FF4081 inset;
-    color: #FF4081;
+    box-shadow: 0 0 #43569c inset;
+    color: #43569c;
 }
 
 .btn:focus {
