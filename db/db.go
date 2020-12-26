@@ -103,8 +103,8 @@ func SaveUserInfo(name, mailBox, pwd string) error {
 		return errors.New("保存用户名和密码出现错误，请重试！")
 	}
 
-	//2.保存用户名和密码
-	err = SaveMailBoxPwd(mailBox, pwd, name)
+	//2.保存用户邮箱和密码
+	err = SaveMailBoxPwd(mailBox, pwd)
 	if err != nil {
 		return err
 	}
@@ -165,7 +165,7 @@ func SaveNamePwd(name, pwd string) error {
 }
 
 //保存用户邮箱和密码
-func SaveMailBoxPwd(mailBox, pwd, mame string) error {
+func SaveMailBoxPwd(mailBox, pwd string) error {
 	f_mailBox_Pwd, err := os.OpenFile(utils.MailBox_Pwd_PATH, os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("err = ", err, )
