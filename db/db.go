@@ -98,7 +98,7 @@ func SaveUserInfo(name, mailBox, pwd string) error {
 	}
 
 	//1.保存用户名和密码
-	err = SaveNamePwd(name, pwd, mailBox)
+	err = SaveNamePwd(name, pwd)
 	if err != nil {
 		return errors.New("保存用户名和密码出现错误，请重试！")
 	}
@@ -125,9 +125,9 @@ func SaveUserInfo(name, mailBox, pwd string) error {
 }
 
 //保存用户名和密码
-func SaveNamePwd(name, pwd, mailBox string) error {
+func SaveNamePwd(name, pwd string) error {
 	//1.打开文件name_Pwd.txt，保存用户名和密码
-	f_name_Pwd, err := os.OpenFile(utils.Name_Pwd_PATH, os.O_WRONLY, 0644) //传递文件路径
+	f_name_Pwd, err := os.OpenFile(utils.Name_Pwd_PATH, os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("err = ", err, )
 		return err
@@ -166,7 +166,7 @@ func SaveNamePwd(name, pwd, mailBox string) error {
 
 //保存用户邮箱和密码
 func SaveMailBoxPwd(mailBox, pwd, mame string) error {
-	f_mailBox_Pwd, err := os.OpenFile(utils.MailBox_Pwd_PATH, os.O_WRONLY, 0644) //传递文件路径
+	f_mailBox_Pwd, err := os.OpenFile(utils.MailBox_Pwd_PATH, os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("err = ", err, )
 		return err
@@ -206,7 +206,7 @@ func SaveMailBoxPwd(mailBox, pwd, mame string) error {
 
 //保存用户名和邮箱
 func SaveNameMailBox(name, mailBox string) error {
-	f_Name_MailBox, err := os.OpenFile(utils.Name_MailBox_PATH, os.O_WRONLY, 0644) //传递文件路径
+	f_Name_MailBox, err := os.OpenFile(utils.Name_MailBox_PATH, os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -238,7 +238,7 @@ func SaveNameMailBox(name, mailBox string) error {
 
 //保存用户邮箱和用户名
 func SaveMailBoxName(mailBox, name string) error {
-	f_MailBox_Name, err := os.OpenFile(utils.MailBox_Name_PATH, os.O_WRONLY, 0644) //传递文件路径
+	f_MailBox_Name, err := os.OpenFile(utils.MailBox_Name_PATH, os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -298,7 +298,6 @@ func InitMap_Name_Pwd() error {
 		}
 
 	}
-	return nil
 }
 
 //初始化Map_MailBox_Pwd
@@ -333,7 +332,6 @@ func InitMap_MailBox_Pwd() error {
 		}
 
 	}
-	return nil
 }
 
 //初始化Map_Name_MailBox
@@ -367,7 +365,6 @@ func InitMap_Name_MailBox() error {
 		}
 
 	}
-	return nil
 }
 
 //初始化Map_MailBox_Name
@@ -401,5 +398,4 @@ func InitMap_MailBox_Name() error {
 		}
 
 	}
-	return nil
 }
