@@ -1,3 +1,8 @@
+/*
+ *Author： Xia
+ *周日 12月 27 22:06 2020
+ */
+
 package wallet
 
 //=============== begin:AbandontranSactionInfo ===============//

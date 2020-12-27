@@ -820,9 +820,11 @@ func (bc btcSer) ValidateAddress(address string) util.ValidateAddressInfo {
 	return validateAddressInfo
 }
 
-
-//2020.12.22
-//Wallet
+//----------------------------begin:wallet---------------------------------//
+/*
+ *Author： Xia
+ *周日 12月 27 22:06 2020
+ */
 //返回关于重新扫描
 func (bc btcSer) AbortRescan() bool {
 	paramsSlice := []interface{}{}
@@ -1178,3 +1180,4 @@ func (bc btcSer) ListLabels() string {
 
 	return ""
 }
+//------------------------------end--------------------------------//
