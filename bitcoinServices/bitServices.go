@@ -4,6 +4,8 @@ package bitcoinServices
 
 import (
 	"bitcoin-Core/models/blockchain"
+	"bitcoin-Core/models/rawtransactions"
+	"bitcoin-Core/models/util"
 	"bitcoin-Core/utils"
 	"bitcoin-Core/utils/Rpc"
 	"strings"
@@ -469,7 +471,7 @@ func (bc btcSer) GetDifficulty() float64 {
 func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON("getmempoolinfo", paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.GETMEMPOOLINFO, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -490,3 +492,329 @@ func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
 
 	return mempoolInfo
 }
+
+//author :陈浩亮  time ：2020/12/24
+//分析psbt
+func (bc btcSer) Analyzepsbt(psbt string) rawtransactions.Analyzepsbt {
+	paramsSlice := []interface{}{psbt}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.ANALYZEPSBT , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	analyzepsbt := rawtransactions.Analyzepsbt{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		analyzepsbt.Estimated_vsize = res["estimated_vsize"].(float64)
+		analyzepsbt.Estimated_feerate = res["estimated_feerate"].(float64)
+		analyzepsbt.Fee = res["fee"].(float64)
+		analyzepsbt.Next = res["next"].(string)
+		analyzepsbt.Error = res["error"].(string)
+	}
+
+	return analyzepsbt
+}
+
+//合并结合pspt
+func (bc btcSer) Combinepsbt(txs string) string {
+	paramsSlice := []interface{}{txs}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.COMBINEPSBT, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//合并结合原始交易
+func (bc btcSer) Combinerawtransaction(txs string) string {
+	paramsSlice := []interface{}{txs}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.COMBINERAWTRANSACTION, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//提取最终的psbt
+func (bc btcSer) Finalizepsbt(psbting string) rawtransactions.Finalizepsbt {
+	paramsSlice := []interface{}{psbting}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.FINALIZEPSBT , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult :=Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	finalizepsbt := rawtransactions.Finalizepsbt{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		finalizepsbt.Psbt = res["psbt"].(string)
+		finalizepsbt.Hex = res["hex"].(string)
+		finalizepsbt.Complete = res["complete"].(bool)
+	}
+
+	return finalizepsbt
+}
+
+//转换为psbt
+func (bc btcSer) Converttopsbt(rawTransaction string) string {
+	paramsSlice := []interface{}{rawTransaction}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.CONVERTTOPSBT, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult :=Rpc. DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//找原始交易信息
+func (bc btcSer) Fundrawtransaction(rawTransaction string) rawtransactions.Fundrawtransaction {
+	paramsSlice := []interface{}{rawTransaction}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.FUNDRAWTRANSACTION , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	fundrawtransaction := rawtransactions.Fundrawtransaction{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		fundrawtransaction.Result = res["result"].(string)
+		fundrawtransaction.Fee = res["fee"].(float64)
+		fundrawtransaction.Changepos = res["changepos"].(float64)
+	}
+
+	return fundrawtransaction
+}
+
+//发送原始交易信息
+func (bc btcSer) Sendrawtransaction(rawTransaction string) string {
+	paramsSlice := []interface{}{rawTransaction}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson :=Rpc. PrepareJSON(utils.SENDRAWTRANSACTION, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//用私钥签名交易
+func (bc btcSer) Signrawtransactionwithkey(pri string) rawtransactions.Signrawtransactionwithkey {
+	paramsSlice := []interface{}{pri}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.SIGNRAWTRANSACTIONWITHKEY, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult :=Rpc. DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	signrawtransactionwithkey := rawtransactions.Signrawtransactionwithkey{}
+	resBytes, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		signrawtransactionwithkey.Hex = resBytes["hex"].(string)
+		signrawtransactionwithkey.Complete = resBytes["complete"].(bool)
+		signrawtransactionwithkey.Errors_, ok = resBytes["errors"].([]interface{})
+		if ok {
+			for i := 0; i < len(signrawtransactionwithkey.Errors_); i++ {
+				mapValue, ok := signrawtransactionwithkey.Errors_[i].(map[string]interface{})
+				if ok {
+					var error rawtransactions.Error
+					error.Txid = mapValue["Txid"].(string)
+					error.Vout = mapValue["Vout"].(float64)
+					error.ScriptSig = mapValue["ScriptSig"].(string)
+					error.Sequence = mapValue["Sequence"].(float64)
+					error.Error = mapValue["Error"].(string)
+				}
+			}
+		}
+
+
+	}
+
+	return signrawtransactionwithkey
+}
+
+//测试连接池是否接受链接
+func (bc btcSer) Testmempoolaccept() rawtransactions.Testmempoolaccept {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.TESTMEMPOOLACCEPT, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	testmempoolaccept := rawtransactions.Testmempoolaccept{}
+	_, ok := rpcResult.Data.Result.(map[string]interface{})
+
+	if ok {
+
+		for i := 0; i < len(testmempoolaccept.Test_); i++ {
+			mapValue, ok := testmempoolaccept.Test_[i].(map[string]interface{})
+			if ok {
+				var testing rawtransactions.Testing
+				testing.Txid = mapValue["Txid"].(string)
+				testing.Allowed = mapValue["allowed"].(bool)
+				testing.Reject_reason = mapValue["reject_reason"].(string)
+			}
+		}
+	}
+
+	return testmempoolaccept
+}
+
+//创建多重签名需求
+func (bc btcSer) Createmultisig(nrequired  float64,pubkey string) util.Createmultisig {
+	paramsSlice := []interface{}{nrequired,pubkey}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.CREATEMULTISIG , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	createmultisig := util.Createmultisig{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		createmultisig.Address = res["address"].(string)
+		createmultisig.RedeemScript = res["redeemScript"].(string)
+		createmultisig.Descriptor = res["descriptor"].(string)
+	}
+
+	return createmultisig
+}
+
+//地址起源
+func (bc btcSer) Deriveaddresses(descriptor  string) string {
+	paramsSlice := []interface{}{descriptor}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.DERIVEADDRESSES, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//估算费用
+func (bc btcSer) Estimatesmartfee(conf_target float64) util.Estimatesmartfee {
+	paramsSlice := []interface{}{conf_target}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson :=Rpc. PrepareJSON(utils.ESTIMATESMARTFEE , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	estimatesmartfee := util.Estimatesmartfee{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		estimatesmartfee.Feerate = res["Feerate"].(float64)
+		estimatesmartfee.Error = res["Error"].(string)
+		estimatesmartfee.Block = res["Block"].(float64)
+	}
+
+	return estimatesmartfee
+}
+
+//获取描述符信息
+func (bc btcSer) Getdescriptorinfo(descriptor string) util.Getdescriptorinfo {
+	paramsSlice := []interface{}{descriptor}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.GETDESCRIPTORINFO , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	getdescriptorinfo := util.Getdescriptorinfo{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		getdescriptorinfo.Descriptor = res["Descriptor"].(string)
+		getdescriptorinfo.Checksum = res["Checksum"].(string)
+		getdescriptorinfo.Isrange = res["Isrange"].(bool)
+		getdescriptorinfo.Issolvable = res["Issolvable"].(bool)
+		getdescriptorinfo.Hasprivatekeys = res["Hasprivatekeys"].(bool)
+	}
+
+	return getdescriptorinfo
+}
+
+//用私钥对交易进行签名
+func (bc btcSer) Signmessagewithprivkey(privkey  string) string {
+	paramsSlice := []interface{}{privkey}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.SIGNMESSAGEWITHPRIVKEY, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	res, ok := rpcResult.Data.Result.(string)
+	if ok {
+		return res
+	}
+	return ""
+}
+
+//验证地址信息
+func (bc btcSer) Validateaddress(address string) util.Validateaddress {
+	paramsSlice := []interface{}{address}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.VALIDATEADDRESS , paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	validateaddress := util.Validateaddress{}
+
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		validateaddress.Isvalid = res["Isvalid"].(bool)
+		validateaddress.Address = res["Address"].(string)
+		validateaddress.ScriptPubKey = res["ScriptPubKey"].(string)
+		validateaddress.Isscript = res["Isscript"].(bool)
+		validateaddress.Iswitness = res["Iswitness"].(bool)
+		validateaddress.Witness_version = res["Witness_version"].(float64)
+		validateaddress.Witness_program = res["Witness_program"].(string)
+	}
+
+	return validateaddress
+}
+
+

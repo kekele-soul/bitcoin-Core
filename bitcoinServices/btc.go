@@ -82,33 +82,33 @@ type Network interface {
 
 }
 
-//author : 陈浩亮  time ：2020/12/22
+//author : 陈浩亮  time ：2020/12/24
 //一个人完成以下两个接口
 //原始交易
 type Rawtransactions interface {
 	//分析psbt
-	Analyzepsbt(psbt string)
+	Analyzepsbt(psbt string) entity.Analyzepsbt
 
 	//合并结合pspt
-	Combinepsbt() entity.Combinepsbt
+	Combinepsbt(txs string)
 
 	//合并结合原始交易
-	Combinerawtransaction() entity.Combinerawtransaction
+	Combinerawtransaction(txs string)
 
-	//创建pspt
-	Createpsbt() entity.Createpsbt
+	//提取最终的psbt
+	Finalizepsbt(psbting string) entity.Finalizepsbt
 
-	//创建一个原始交易
-	Createrawtransaction() entity.Createrawtransaction
+	//转换为psbt
+	Converttopsbt(rawTransaction string)
 
 	//找原始交易
-	Fundrawtransaction(hexstring string)
+	Fundrawtransaction(rawTransaction string) entity.Fundrawtransaction
 
 	//发送原始交易信息
-	Sendrawtransaction() entity.Sendrawtransaction
+	Sendrawtransaction(rawTransaction string)
 
 	//用私钥签名交易
-	Signrawtransactionwithkey() entity.Signrawtransactionwithkey
+	Signrawtransactionwithkey(pri string) entity.Signrawtransactionwithkey
 
 	//测试连接池是否接受链接
 	Testmempoolaccept() entity.Testmempoolaccept
@@ -117,22 +117,23 @@ type Rawtransactions interface {
 //工具
 type Util interface {
 	//创建多重签名需求
-	CreatemultisigNrequired() entity.CreatemultisigNrequired
+	Createmultisig(nrequired  float64,pubkey string) entity.Createmultisig
 
 	//地址起源
-	Deriveaddresses() entity.Deriveaddresses
+	Deriveaddresses(descriptor  string)
 
 	//估算费用
-	Estimate() entity.Estimate
+	Estimatesmartfee(conf_target float64) entity.Estimatesmartfee
 
 	//获取描述符信息
-	Getdescriptorinfo(descriptor string)
+	Getdescriptorinfo(descriptor string) entity.Getdescriptorinfo
 
 	//用私钥对交易进行签名
-	Signmessagewithprivkey() entity.Signmessagewithprivkey
+	Signmessagewithprivkey(privkey string)
 
 	//验证地址信息
-	Validateaddress(address string)
+	Validateaddress(address string) entity.Validateaddress
+
 }
 
 
