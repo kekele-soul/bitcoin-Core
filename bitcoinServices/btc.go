@@ -2,7 +2,8 @@ package bitcoinServices
 
 import (
 	"bitcoin-Core/models/blockchain"
-	"bitcoin/entity"
+	"bitcoin-Core/models/rawTransactions"
+	"bitcoin-Core/models/util"
 )
 
 type BlockChahin interface {
@@ -87,52 +88,52 @@ type Network interface {
 //原始交易
 type Rawtransactions interface {
 	//分析psbt
-	Analyzepsbt(psbt string) entity.Analyzepsbt
+	AnalyzePsbt(psbt string) rawTransactions.AnalyzePsbt
 
 	//合并结合pspt
-	Combinepsbt(txs string)
+	CombinePsbt(txs string)
 
 	//合并结合原始交易
-	Combinerawtransaction(txs string)
+	CombineRawTransaction(txs string)
 
 	//提取最终的psbt
-	Finalizepsbt(psbting string) entity.Finalizepsbt
+	FinalizePsbt(psbting string) rawTransactions.FinalizePsbt
 
 	//转换为psbt
-	Converttopsbt(rawTransaction string)
+	ConverttoPsbt(rawTransaction string)
 
 	//找原始交易
-	Fundrawtransaction(rawTransaction string) entity.Fundrawtransaction
+	FundRawTransaction(rawTransaction string) rawTransactions.FundRawTransaction
 
 	//发送原始交易信息
-	Sendrawtransaction(rawTransaction string)
+	SendRawTransaction(rawTransaction string)
 
 	//用私钥签名交易
-	Signrawtransactionwithkey(pri string) entity.Signrawtransactionwithkey
+	SignRawTransactionWithKey(pri string) rawTransactions.SignRawTransactionWithKey
 
 	//测试连接池是否接受链接
-	Testmempoolaccept() entity.Testmempoolaccept
+	TestMempoolAccept() rawTransactions.TestMempoolAccept
 }
 
 //工具
 type Util interface {
 	//创建多重签名需求
-	Createmultisig(nrequired  float64,pubkey string) entity.Createmultisig
+	CreateMultisig(nrequired  float64,pubkey string) util.CreateMultiSig
 
 	//地址起源
-	Deriveaddresses(descriptor  string)
+	DeriveAddresses(descriptor  string)
 
 	//估算费用
-	Estimatesmartfee(conf_target float64) entity.Estimatesmartfee
+	EstimateSmartFee(conf_target float64) util.EstimateSmartFee
 
 	//获取描述符信息
-	Getdescriptorinfo(descriptor string) entity.Getdescriptorinfo
+	GetDesCriptorInfo(descriptor string) util.DesCriptorInfo
 
 	//用私钥对交易进行签名
-	Signmessagewithprivkey(privkey string)
+	SignMessageWithprivKey(privkey string)
 
 	//验证地址信息
-	Validateaddress(address string) entity.Validateaddress
+	ValidateAddress(address string) util.ValidateAddressInfo
 
 }
 

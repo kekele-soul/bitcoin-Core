@@ -1,7 +1,7 @@
-package rawtransactions
+package rawTransactions
 //=============== begin:Analyzepsbt ===============//
 //合并结合pspt
-type Analyzepsbt struct {
+type AnalyzePsbt struct {
 	Estimated_vsize float64
 	Estimated_feerate float64
 	Fee float64
@@ -26,7 +26,7 @@ type Analyzepsbt struct {
 
 //=============== begin:Finalizepsbt ===============//
 //提取最终的pspt
-type Finalizepsbt struct {
+type FinalizePsbt struct {
 	Psbt string
 	Hex string
 	Complete bool
@@ -42,7 +42,7 @@ type Finalizepsbt struct {
 
 //=============== begin:Sendrawtransaction ===============//
 //找原始交易信息
-type Fundrawtransaction struct {
+type FundRawTransaction struct {
 	Result string
 	Fee float64
 	Changepos float64
@@ -58,7 +58,7 @@ type Error struct {
 	Sequence float64
 	Error string
 }
-type  Signrawtransactionwithkey struct {
+type  SignRawTransactionWithKey struct {
 	Hex string
 	Complete bool
 	Errors []Error
@@ -73,7 +73,7 @@ type Testing struct {
 	Allowed bool
 	Reject_reason string
 }
-type Testmempoolaccept struct {
+type TestMempoolAccept struct {
 	Test []Testing
 	Test_[]interface{}
 }
