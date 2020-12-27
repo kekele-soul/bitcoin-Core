@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>主页面</title>
     <link rel="stylesheet" href="../static/css/index.css">
     <link rel="stylesheet" href="../static/css/home_style.css">
 </head>
@@ -11,7 +11,7 @@
 <body>
 <div id="div1"><!--设置主导航栏-->
     <ul class="nav1">
-        <li><a href="#/">网站首页</a></li>
+        <li><a href="home.html">网站首页</a></li>
         <li><a href="#/">关于我们</a></li>
         <li><a href="#/">命令调试</a></li>
         <li><a href="#/">产品中心</a></li>
@@ -25,7 +25,6 @@
         <div class="nav2-box">
             <div class="nav2">
                 <ul class="nav2-ul">
-                    <li><a href="#" class="home"><span>首页</span></a></li>
                     <li><a href="#" class="develop"><span>Blockchain</span></a></li>
                     <li><a href="#" class="wechat"><span>Network</span></a></li>
                     <li><a href="#" class="case"><span>Wallet</span></a></li>
@@ -63,15 +62,15 @@
                 </div>
                 <div class="nav2-slide-o">
                     <ul>
-                        <li><a href="#"><span>abandontransaction</span></a></li>
-                        <li><a href="#"><span>abortrescan</span></a></li>
-                        <li><a href="#"><span>addmultisigaddress</span></a></li>
-                        <li><a href="#"><span>backupwallet</span></a></li>
-                        <li><a href="#"><span>bumpfee</span></a></li>
-                        <li><a href="#"><span>dumpprivkey</span></a></li>
-                        <li><a href="#"><span>dumpwallet</span></a></li>
-                        <li><a href="#"><span>getaddressinfo</span></a></li>
-                        <li><a href="#"><span>getbalance</span></a></li>
+                        <li id="1"><a href="#"><span>abandontransaction</span></a></li>
+                        <li id="2"><a href="#"><span>abortrescan</span></a></li>
+                        <li id="3"><a href="#"><span>addmultisigaddress</span></a></li>
+                        <li id="4"><a href="#"><span>backupwallet</span></a></li>
+                        <li id="5"><a href="#"><span>bumpfee</span></a></li>
+                        <li id="6"><a href="#"><span>dumpprivkey</span></a></li>
+                        <li id="7"><a href="#"><span>dumpwallet</span></a></li>
+                        <li id="8"><a href="#"><span>getaddressinfo</span></a></li>
+                        <li id="9"><a href="#"><span>getbalance</span></a></li>
                     </ul>
                 </div>
                 <div class="nav2-slide-o">
@@ -89,8 +88,42 @@
         </div>
     </div>
 </div>
+<div id="div3" style="background-color: black; opacity: 0.7; height: 400px; width: 800px;position: fixed;margin-top: 50%;margin-left: 250px;color: white ">
+
+</div>
 </body>
 <script src="../static/js/home.js"></script>
 <script src="../static/js/home_script.js"></script>
+<script src="../static/js/ajax.js"></script>
+<script>
 
+    //TODO 2020/12/25 ajax第一次测试成功
+
+    var div1 = document.getElementById("1");
+    var div2 = document.getElementById("2");
+    var div3 = document.getElementById("div3");
+
+    div1.onclick = function () {
+
+        Ajax("GET", "http://127.0.0.1:8080/views/test.html", function (xhr) {
+                div3.innerHTML = xhr.responseText;
+
+            }
+            , function (xhr) {
+                alert("请求失败")
+            });
+    };
+    div2.onclick = function () {
+
+        //$("#second").load("test.txt")
+        Ajax("GET", "http://127.0.0.1:8080/views/test.txt", function (xhr) {
+                div3.innerHTML = xhr.responseText;
+            }
+            , function (xhr) {
+                alert("请求失败")
+
+            });
+
+    };
+</script>
 </html>

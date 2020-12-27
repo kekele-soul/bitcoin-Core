@@ -35,7 +35,7 @@ func (l *LoginController) Post() {
 			return
 		}
 		if b == true {
-			l.TplName = "ajax_test.html"
+			l.TplName = "home.html"
 
 		}
 
@@ -52,7 +52,7 @@ func (l *LoginController) Post() {
 			return
 		}
 		if b == true {
-			l.TplName = "ajax_test.html"
+			l.TplName = "home.html"
 
 		}
 	}
