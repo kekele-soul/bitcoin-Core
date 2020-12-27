@@ -1,19 +1,19 @@
-var input = document.getElementsByTagName("input");
-
-
-if (getCookie("username")) {
-    input[0].value = getCookie("username");
-    input[1].value = getCookie("password");
-}
-
- function btn () {
-    var username = input[0].value;
-    var password = input[1].value;
-
-    setCookie("username", username, 7);
-    setCookie("password", password, 7);
-    alert("已成功设置七天免登录")
-};
+// var input = document.getElementsByTagName("input");
+//
+//
+// if (getCookie("username")) {
+//     input[0].value = getCookie("username");
+//     input[1].value = getCookie("password");
+// }
+//
+//  function btn () {
+//     var username = input[0].value;
+//     var password = input[1].value;
+//
+//     setCookie("username", username, 7);
+//     setCookie("password", password, 7);
+//     alert("已成功设置七天免登录")
+// };
 
 
 /*
@@ -33,9 +33,9 @@ if (getCookie("username")) {
 function setCookie(name, value, day) {
     var date = new Date();
     date.setDate(date.getDate() + day);
-    // var expires = "expires=" + date.toDateString();
+    var expires = "expires=" + date.toUTCString();
     // document.cookie = cname + "=" + cvalue + ";" + expires;
-    document.cookie = name + "=" + value + ";expires=" + date;
+    document.cookie = name + "=" + value +expires;
 }
 
 /**
@@ -68,7 +68,7 @@ function getCookie(name) {
  * 该方法用于停止cookie的生命周期
  */
 function removecookie(name) {
-    setCookie(name, 1, -1)
+    setCookie(name, '', -1)
 
 }
 

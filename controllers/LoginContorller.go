@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"bitcoin-Core/bitcoinServices"
 	"bitcoin-Core/models"
 	"fmt"
 	"github.com/astaxie/beego"
@@ -52,9 +53,13 @@ func (l *LoginController) Post() {
 			return
 		}
 		if b == true {
-			l.TplName = "home.html"
 
+			flo := bitcoinServices.GetBC().GetBlockCount
+			l.Data["flo"] = flo
+			l.TplName = "home.html"
 		}
 	}
+
+
 
 }
