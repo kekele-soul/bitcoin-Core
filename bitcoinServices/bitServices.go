@@ -3,7 +3,7 @@
 package bitcoinServices
 
 import (
-	"bitcoin-Core/models/blockchain"
+	"bitcoin-Core/models/blockChain"
 	"bitcoin-Core/models/control"
 	"bitcoin-Core/models/mining"
 	"bitcoin-Core/models/network"
@@ -47,7 +47,7 @@ func (bc btcSer) GetBestBlockHash() string {
 }
 
 //根据区块Hash获取区块信息
-func (bc btcSer) GetBlockInfoByHash(blockHash string) blockchain.BlockInfo {
+func (bc btcSer) GetBlockInfoByHash(blockHash string) blockChain.BlockInfo {
 	paramsSlice := []interface{}{blockHash}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCK, paramsSlice)
@@ -56,7 +56,7 @@ func (bc btcSer) GetBlockInfoByHash(blockHash string) blockchain.BlockInfo {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	blockInfo := blockchain.BlockInfo{}
+	blockInfo := blockChain.BlockInfo{}
 	resBytes, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		blockInfo.Time = resBytes["time"].(float64)
@@ -83,8 +83,8 @@ func (bc btcSer) GetBlockInfoByHash(blockHash string) blockchain.BlockInfo {
 }
 
 //根据区块hash获取区块Info
-func (bc btcSer) GetBlockInfoByHeight(height int) blockchain.BlockInfo {
-	blockInfo := blockchain.BlockInfo{}
+func (bc btcSer) GetBlockInfoByHeight(height int) blockChain.BlockInfo {
+	blockInfo := blockChain.BlockInfo{}
 	if float64(height) > bc.GetBlockCount() {
 		return blockInfo
 	}
@@ -106,7 +106,7 @@ func (bc btcSer) GetBlockInfoByHeight(height int) blockchain.BlockInfo {
 }
 
 //获取区块链信息
-func (bc btcSer) GetBlockChainInfo() blockchain.BlockChainInfo {
+func (bc btcSer) GetBlockChainInfo() blockChain.BlockChainInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCKCHAININFO, paramsSlice)
@@ -115,7 +115,7 @@ func (bc btcSer) GetBlockChainInfo() blockchain.BlockChainInfo {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	blockChainInfo := blockchain.BlockChainInfo{}
+	blockChainInfo := blockChain.BlockChainInfo{}
 	resBytes, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		blockChainInfo.Size_on_disk = resBytes["size_on_disk"].(float64)
@@ -177,7 +177,7 @@ func (bc btcSer) GetBlockChainInfo() blockchain.BlockChainInfo {
 }
 
 //获取网络信息
-func (bc btcSer) GetNetWorkInfo() blockchain.NetWorkInfo {
+func (bc btcSer) GetNetWorkInfo() blockChain.NetWorkInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETNETWORKINFO, paramsSlice)
@@ -186,7 +186,7 @@ func (bc btcSer) GetNetWorkInfo() blockchain.NetWorkInfo {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	netWorkInfo := blockchain.NetWorkInfo{}
+	netWorkInfo := blockChain.NetWorkInfo{}
 	resBytes, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		netWorkInfo.Relayfee = resBytes["relayfee"].(float64)
@@ -197,7 +197,7 @@ func (bc btcSer) GetNetWorkInfo() blockchain.NetWorkInfo {
 			for i := 0; i < len(netWorkInfo.Networks_); i++ {
 				mapValue, ok := netWorkInfo.Networks_[i].(map[string]interface{})
 				if ok {
-					var network blockchain.NetWork
+					var network blockChain.NetWork
 					network.Name = mapValue["name"].(string)
 					network.Limited = mapValue["limited"].(bool)
 					network.Reachable = mapValue["reachable"].(bool)
@@ -262,7 +262,7 @@ func (bc btcSer) GetBlockHash(height int) string {
 }
 
 //根据区块Hash获取区块头信息
-func (bc btcSer) GetBlockHeaderInfoByHash(hash string) blockchain.BlockHeaderInfo {
+func (bc btcSer) GetBlockHeaderInfoByHash(hash string) blockChain.BlockHeaderInfo {
 	paramsSlice := []interface{}{hash}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCKHEADER, paramsSlice)
@@ -271,7 +271,7 @@ func (bc btcSer) GetBlockHeaderInfoByHash(hash string) blockchain.BlockHeaderInf
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列华操作
-	blockHeadInfo := blockchain.BlockHeaderInfo{}
+	blockHeadInfo := blockChain.BlockHeaderInfo{}
 
 	resBytes, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
@@ -295,8 +295,8 @@ func (bc btcSer) GetBlockHeaderInfoByHash(hash string) blockchain.BlockHeaderInf
 }
 
 //根据区块Height获取区块头信息
-func (bc btcSer) GetBlockHeaderInfoByHeight(height float64) blockchain.BlockHeaderInfo {
-	blockHeaderInfo := blockchain.BlockHeaderInfo{}
+func (bc btcSer) GetBlockHeaderInfoByHeight(height float64) blockChain.BlockHeaderInfo {
+	blockHeaderInfo := blockChain.BlockHeaderInfo{}
 	if float64(height) > bc.GetBlockCount() {
 		return blockHeaderInfo
 	}
@@ -317,8 +317,8 @@ func (bc btcSer) GetBlockHeaderInfoByHeight(height float64) blockchain.BlockHead
 }
 
 //根据区块高度获取区块状态
-func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockchain.BlockStats {
-	blockStats := blockchain.BlockStats{}
+func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockChain.BlockStats {
+	blockStats := blockChain.BlockStats{}
 	if height > bc.GetBlockCount() {
 		return blockStats
 	}
@@ -376,8 +376,8 @@ func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockchain.BlockStats
 }
 
 //根据区块Hash获取区块状态
-func (bc btcSer) GetBlockStatsInfoByHash(hash string) blockchain.BlockStats {
-	blockStats := blockchain.BlockStats{}
+func (bc btcSer) GetBlockStatsInfoByHash(hash string) blockChain.BlockStats {
+	blockStats := blockChain.BlockStats{}
 	if len(hash) != 64 || hash[0] != 48{
 		return blockStats
 	}
@@ -398,7 +398,7 @@ func (bc btcSer) GetBlockStatsInfoByHash(hash string) blockchain.BlockStats {
 }
 
 //获取区块链Tip信息
-func (bc btcSer) GetChainTips() blockchain.ChainTips {
+func (bc btcSer) GetChainTips() blockChain.ChainTips {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETCHAINTIPS, paramsSlice)
@@ -407,12 +407,12 @@ func (bc btcSer) GetChainTips() blockchain.ChainTips {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	chainTips := blockchain.ChainTips{}
+	chainTips := blockChain.ChainTips{}
 
 	res, ok := rpcResult.Data.Result.([]interface{})
 	if ok {
 		for i := 0; i < len(res); i++ {
-			var tip blockchain.Tip
+			var tip blockChain.Tip
 			m, ok := res[i].(map[string]interface{})
 			if ok {
 				tip.Height = m["height"].(float64)
@@ -428,7 +428,7 @@ func (bc btcSer) GetChainTips() blockchain.ChainTips {
 }
 
 //获取区块链的交易状态
-func (bc btcSer) GetChainTxStats() blockchain.ChainTxStats {
+func (bc btcSer) GetChainTxStats() blockChain.ChainTxStats {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETCHAINTXSTATS, paramsSlice)
@@ -437,7 +437,7 @@ func (bc btcSer) GetChainTxStats() blockchain.ChainTxStats {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	chainTxStats := blockchain.ChainTxStats{}
+	chainTxStats := blockChain.ChainTxStats{}
 
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
@@ -472,7 +472,7 @@ func (bc btcSer) GetDifficulty() float64 {
 }
 
 //获取回收内存信息
-func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
+func (bc btcSer) GetMempoolInfo() blockChain.MempoolInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETMEMPOOLINFO, paramsSlice)
@@ -481,7 +481,7 @@ func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
-	mempoolInfo := blockchain.MempoolInfo{}
+	mempoolInfo := blockChain.MempoolInfo{}
 
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
@@ -503,54 +503,101 @@ func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
 
 */
 //获得内存信息
-func (bc btcSer) Getmemoryinfo() float64 {
+func (bc btcSer) GetMemoryInfo() control.MemoryInfo {
 	paramsSlice := []interface{}{}
 	rpcNormJson := Rpc.PrepareJSON(utils.GETMEMORYINFO, paramsSlice)
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
-	res, ok := rpcResult.Data.Result.(float64)
+
+	//反序列化操作
+	memoryInfo := control.MemoryInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
-		return res
+		memoryInfo.Used = res["user"].(float64)
+		memoryInfo.Free = res["free"].(float64)
+		memoryInfo.Total = res["total"].(float64)
+		memoryInfo.Locked = res["locked"].(float64)
+		memoryInfo.Chunks_used = res["chunks_used"].(float64)
+		memoryInfo.Chunks_free = res["chunks_free"].(float64)
 	}
 
-	return -0
+	return memoryInfo
 }
 
 //得到rpc信息
-func (br btcSer) Getrpcinfo() control.RpcInfo {
+func (br btcSer) GetRpcInfo() control.RpcInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETRPCINFO, paramsSlice)
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.GETRPCINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	//反序列化操作
-	rpcinfo := control.RpcInfo{}
+	rpcInfo := control.RpcInfo{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
-		rpcinfo.Method = res["method"].(string)
-		rpcinfo.Duration = res["duration"].(float64)
-		rpcinfo.Logpath = res["logpath"].(string)
+		rpcInfo.Method = res["method"].(string)
+		rpcInfo.Duration = res["duration"].(float64)
+		rpcInfo.Logpath = res["logpath"].(string)
 	}
-	return rpcinfo
+	return rpcInfo
 }
 
 //获取并设置日志记录配置
-func (br btcSer) Logging() bool {
+func (br btcSer) LogGing() control.LogGingInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.LOGGING, paramsSlice)
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.LOGGING, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
-	res, ok := rpcResult.Data.Result.(bool)
+
+	//反序列化操作
+	logGingInfo := control.LogGingInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		logGingInfo.Net = res["net"].(bool)
+		logGingInfo.Tor = res["tor"].(bool)
+		logGingInfo.Mempool = res["mempool"].(bool)
+		logGingInfo.Http = res["http"].(bool)
+		logGingInfo.Bench = res["bench"].(bool)
+		logGingInfo.Zmq = res["zmq"].(bool)
+		logGingInfo.Walletdb = res["walletdb"].(bool)
+		logGingInfo.Rpc = res["rpc"].(bool)
+		logGingInfo.Estimatefee = res["estimatefee"].(bool)
+		logGingInfo.Addrman = res["addrman"].(bool)
+		logGingInfo.Selectcoins = res["selectcoins"].(bool)
+		logGingInfo.Reindex = res["reindex"].(bool)
+		logGingInfo.Cmpctblock = res["cmpctblock"].(bool)
+		logGingInfo.Rand = res["rand"].(bool)
+		logGingInfo.Prune = res["prune"].(bool)
+		logGingInfo.Proxy = res["proxy"].(bool)
+		logGingInfo.Mempoolrej = res["mempoolrej"].(bool)
+		logGingInfo.Libevent = res["libevent"].(bool)
+		logGingInfo.Coindb = res["coindb"].(bool)
+		logGingInfo.Qt = res["qt"].(bool)
+		logGingInfo.Leveldb = res["leveldb"].(bool)
+		logGingInfo.Validation = res["validation"].(bool)
+	}
+
+	return logGingInfo
+}
+
+//Bitcoin Cone正常运行时间一秒为单位
+func (br btcSer) UpTime() float64 {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.UPTIME, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.GETMININGINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	res, ok := rpcResult.Data.Result.(float64)
 	if ok {
 		return res
 	}
-
-	return true
+	return -1
 }
 
-//得到挖掘信息
-func (br btcSer) Getmininginfo() mining.MiningInfo {
+
+//得到矿工信息
+func (br btcSer) GetMiningInfo() mining.MiningInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETMININGINFO, paramsSlice)
@@ -586,21 +633,21 @@ func (br btcSer) GetNodeAddresses() network.NodeAddresses {
 	}
 	return nodeaddresses
 }
-func (br btcSer)Listbanned()network.Listbanned  {
+func (br btcSer) ListBanned() network.ListBanned  {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETNODEADDRESSES, paramsSlice)
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.GETNODEADDRESSES, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	//反序列化操作
-	listbanned := network.Listbanned{}
+	listBanned := network.ListBanned{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
-		listbanned.Address = res["address"].(string)
-		listbanned.Ban_created =res["ban_created"].(float64)
-		listbanned.Banned_until = res["banned+until"].(float64)
+		listBanned.Address = res["address"].(string)
+		listBanned.Ban_created =res["ban_created"].(float64)
+		listBanned.Banned_until = res["banned+until"].(float64)
 	}
-	return listbanned
+	return listBanned
 
 }
 

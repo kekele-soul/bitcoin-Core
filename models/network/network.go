@@ -5,11 +5,11 @@ package network
 *周二 12月 22 20:50 2020
 */
 
-type Addnode struct {
+type AddNode struct {
 }
 
 //断距nect节点
-type Disconnectnode struct {
+type DisconnectNode struct {
 }
 type Addresses struct {
 	Address   string
@@ -25,7 +25,7 @@ type AddedNodeInfo struct {
 }
 
 //获得净租金
-type Nettotals struct {
+type NetTotals struct {
 	Totalbytesrecv float64
 	Totalbytessent float64
 	Timemillis     float64
@@ -54,7 +54,7 @@ type NodeAddresses struct {
 }
 
 //List all manually banned IPs/Subnets.
-type Listbanned struct {
+type ListBanned struct {
 	Address      string
 	Banned_until float64
 	Ban_created  float64

@@ -4,7 +4,7 @@
  */
 
 //写与区块链相关的实体
-package blockchain
+package blockChain
 
 //=============== begin:BlockInfo ===============//
 //区块信息

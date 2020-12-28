@@ -20,7 +20,7 @@ type RpcInfo struct {
 	Logpath  string
 }
 //获取并设置日志记录配置
-type Logging struct {
+type LogGingInfo struct {
 	Net         bool
 	Tor         bool
 	Mempool     bool

@@ -7,21 +7,21 @@ package mining
 
 //得到挖掘信息
 type MiningInfo struct {
-	Blocks float64
-	Difficulty float64
+	Blocks        float64
+	Difficulty    float64
 	Networkhashps float64
-	Pooledtx string
-	Warnings string
+	Pooledtx      string
+	Warnings      string
 }
-type Prioritisetransaction struct {
 
+type PrioritiseTransaction struct {
 }
-type Submitblock struct {
 
+type SubmitBlock struct {
 }
-type Submitheader struct {
 
+type SubmitHeader struct {
 }
+
 type NetWorkInfo struct {
-
 }
