@@ -29,7 +29,6 @@ func QueryByName(name string, pwd string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	//mp := Map_Name_Pwd
 
 	//判断用户是否存在
 	pwdBase, ok := Map_Name_Pwd[name]
@@ -53,7 +52,6 @@ func QueryByMail(mailBox string, pwd string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	//mp := Map_MailBox_Pwd
 
 	//判断邮箱是否存在
 	pwdBase, ok := Map_MailBox_Pwd[mailBox]
@@ -271,7 +269,7 @@ func SaveMailBoxName(mailBox, name string) error {
 func InitMap_Name_Pwd() error {
 	Map_Name_Pwd = make(map[string]string)
 
-	f, err := os.Open("db/name_Pwd.txt")
+	f, err := os.Open(utils.Name_Pwd_PATH)
 	if err != nil {
 		return err
 	}
@@ -304,7 +302,7 @@ func InitMap_Name_Pwd() error {
 func InitMap_MailBox_Pwd() error {
 	Map_MailBox_Pwd = make(map[string]string)
 
-	f, err := os.Open("db/mailBox_Pwd.txt")
+	f, err := os.Open(utils.MailBox_Pwd_PATH)
 	if err != nil {
 		return err
 	}
@@ -338,7 +336,7 @@ func InitMap_MailBox_Pwd() error {
 func InitMap_Name_MailBox() error {
 	Map_Name_MailBox = make(map[string]string)
 
-	f, err := os.Open("db/name_MailBox.txt")
+	f, err := os.Open(utils.Name_MailBox_PATH)
 	if err != nil {
 		return err
 	}
@@ -371,7 +369,7 @@ func InitMap_Name_MailBox() error {
 func InitMap_MailBox_Name() error {
 	Map_MailBox_Name = make(map[string]string)
 
-	f, err := os.Open("db/mailBox_Name.txt")
+	f, err := os.Open(utils.MailBox_Name_PATH)
 	if err != nil {
 		return err
 	}
