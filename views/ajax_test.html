@@ -38,7 +38,7 @@
 </div>
 
 <div id="second">
-{{/*    <iframe src='http://localhost:63342/bitcoin-Core/views/test.txt'></iframe>*/}}
+
 </div>
 
 <div id="third">
@@ -53,7 +53,7 @@
 
     div1.onclick = function () {
 
-            Ajax("GET", "http://127.0.0.1:8080/views/test.html", function (xhr) {
+            Ajax("GET", "http://localhost:8080/views/test.html", function (xhr) {
                 div3.innerHTML = xhr.responseText;
 
             }
@@ -64,7 +64,7 @@
     div2.onclick = function () {
 
         //$("#second").load("test.txt")
-        Ajax("GET", "http://127.0.0.1:8080/views/test.txt", function (xhr) {
+        Ajax("GET", "http://localhost:8080/views/test.txt", function (xhr) {
                 div3.innerHTML = xhr.responseText;
             }
             , function (xhr) {
@@ -117,11 +117,7 @@
 <script>
     // jquery实现ajax
     // $.ajax({
-    //     // url:'$(blockchain)/blockchain/BlockInfo/Hash' , //所要请求的信息
-    //     data:{
-    //         sid: '',
-    //         sort:''
-    //     },
+    //     url:'http://localhost:8080/views/test.txt' , //所要请求的信息
     //     type :'post',
     //     datatype: 'json',
     //     success: function (json) {

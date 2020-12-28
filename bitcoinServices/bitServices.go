@@ -20,7 +20,7 @@ type btcSer struct {
 	Control
 	Generating
 	Mining
-	Network
+	NetWork
 	Util
 	Wallet
 	Zmq

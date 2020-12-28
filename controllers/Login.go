@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"bitcoin-Core/bitcoinServices"
 	"bitcoin-Core/models"
 	"fmt"
 	"github.com/astaxie/beego"
@@ -51,10 +52,17 @@ func (l *LoginController) Post() {
 			l.Ctx.WriteString("邮箱或密码错误请重试！")
 			return
 		}
-		if b {
-			l.TplName = "home.html"
 
+		if b == true {
+
+			if b {
+				l.TplName = "home.html"
+
+				flo := bitcoinServices.GetBC().GetBlockCount
+				l.Data["flo"] = flo
+				l.TplName = "home.html"
+			}
 		}
-	}
 
+	}
 }
