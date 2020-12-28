@@ -4,6 +4,9 @@ package bitcoinServices
 
 import (
 	"bitcoin-Core/models/blockchain"
+	"bitcoin-Core/models/control"
+	"bitcoin-Core/models/mining"
+	"bitcoin-Core/models/network"
 	"bitcoin-Core/models/rawTransactions"
 	"bitcoin-Core/models/util"
 	"bitcoin-Core/models/wallet"
@@ -493,6 +496,115 @@ func (bc btcSer) GetMempoolInfo() blockchain.MempoolInfo {
 
 	return mempoolInfo
 }
+//----------------------------begin---------------------------------//
+/**
+//author :zck
+  time ：2020/12/24
+
+*/
+//获得内存信息
+func (bc btcSer) Getmemoryinfo() float64 {
+	paramsSlice := []interface{}{}
+	rpcNormJson := Rpc.PrepareJSON(utils.GETMEMORYINFO, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	res, ok := rpcResult.Data.Result.(float64)
+	if ok {
+		return res
+	}
+
+	return -0
+}
+
+//得到rpc信息
+func (br btcSer) Getrpcinfo() control.RpcInfo {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.GETRPCINFO, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.GETRPCINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	//反序列化操作
+	rpcinfo := control.RpcInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		rpcinfo.Method = res["method"].(string)
+		rpcinfo.Duration = res["duration"].(float64)
+		rpcinfo.Logpath = res["logpath"].(string)
+	}
+	return rpcinfo
+}
+
+//获取并设置日志记录配置
+func (br btcSer) Logging() bool {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.LOGGING, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.LOGGING, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	res, ok := rpcResult.Data.Result.(bool)
+	if ok {
+		return res
+	}
+
+	return true
+}
+
+//得到挖掘信息
+func (br btcSer) Getmininginfo() mining.MiningInfo {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.GETMININGINFO, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.GETMININGINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	//反序列化操作
+	mininginfo := mining.MiningInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		mininginfo.Blocks = res["blocks"].(float64)
+		mininginfo.Difficulty = res["difficulty"].(float64)
+		mininginfo.Networkhashps = res["networkhashps"].(float64)
+		mininginfo.Pooledtx = res["pooledtx"].(string)
+		mininginfo.Warnings = res["warnings"].(string)
+	}
+	return mininginfo
+}
+
+func (br btcSer) GetNodeAddresses() network.NodeAddresses {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.GETNODEADDRESSES, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.GETNODEADDRESSES, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	//反序列化操作
+	nodeaddresses := network.NodeAddresses{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		nodeaddresses.Address = res["address"].(string)
+		nodeaddresses.Post = res["post"].(float64)
+		nodeaddresses.Services = res["services"].(float64)
+		nodeaddresses.Time = res["time"].(float64)
+	}
+	return nodeaddresses
+}
+func (br btcSer)Listbanned()network.Listbanned  {
+	paramsSlice := []interface{}{}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.GETNODEADDRESSES, paramsSlice)
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.GETNODEADDRESSES, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	//反序列化操作
+	listbanned := network.Listbanned{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		listbanned.Address = res["address"].(string)
+		listbanned.Ban_created =res["ban_created"].(float64)
+		listbanned.Banned_until = res["banned+until"].(float64)
+	}
+	return listbanned
+
+}
+
+//-------------------------------------------------------------//
 
 //author :陈浩亮  time ：2020/12/24
 //分析psbt
