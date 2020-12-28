@@ -29,10 +29,10 @@ func QueryByName(name string, pwd string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	mp := Map_Name_Pwd
+	//mp := Map_Name_Pwd
 
 	//判断用户是否存在
-	pwdBase := mp[name]
+	pwdBase := Map_Name_Pwd[name]
 	if pwdBase == "" {
 		str := fmt.Sprintf("用户:%v不存在!",name)
 		return false, errors.New(str)
@@ -53,10 +53,10 @@ func QueryByMail(mailBox string, pwd string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	mp := Map_MailBox_Pwd
+	//mp := Map_MailBox_Pwd
 
 	//判断邮箱是否存在
-	pwdBase := mp[mailBox]
+	pwdBase := Map_MailBox_Pwd[mailBox]
 	if pwdBase == "" {
 		str := fmt.Sprintf("邮箱:%v不存在!",mailBox)
 		return false, errors.New(str)
