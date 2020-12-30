@@ -215,3 +215,84 @@ type Wallet interface {
 //消息队列
 type Zmq interface {
 }
+
+
+//=============== begin:Processpsbt ===============//
+//author : 何新萍
+type Processps struct {
+	Psbt     string
+	Complete bool
+}
+
+//=============== end:Processpsbt ===============//
+
+//=============== begin:创建者和更新者角色 ===============//
+//实现创建者和更新者角色方法的参数相关实体
+type Input struct {
+	TxId     string
+	Vout     float64
+	Sequence float64
+}
+
+//outputs
+type Address struct {
+	Address float64
+}
+
+type Data struct {
+	Data string
+}
+
+type Obj struct {
+	ChangeAddress          string  //optional, default=pool address
+	ChangePosition         float64 //optional, default=random
+	Change_type            string  //optional, default=set by -changetype
+	IncludeWatching        bool    //optional, default=true
+	LockUnspents           bool    //optional, default=false
+	FeeRate                float64 //optional, default=0
+	SubtractFeeFromOutputs []int   //vout_index optional, default=empty array
+	Replaceable            bool    //optional, default=wallet default
+	Conf_target            float64 //optional, default=fall back to wallet's confirmation target
+	Estimate_mode          string  //optional, default=UNSET, must be one of:"UNSET"、"ECONOMICAL"、"CONSERVATIVE"
+}
+
+//=============== end:创建者和更新者角色 ===============//
+
+//=============== begin:用密钥对原始交易进行签名 ===============//
+//签名所需参数的实体
+type PrevTx struct {
+	TxId          string
+	Vout          float64
+	ScriptPubKey  string
+	RedeemScript  string
+	WitnessScript string
+	Amount        float64
+}
+
+//签名的结果实体
+type Err struct {
+	TxId      string
+	Vout      float64
+	ScriptSig string
+	Sequence  float64
+	Error     string
+}
+
+type SignResult struct {
+	Hex      string
+	Complete bool
+	Errors   []Err
+}
+
+//=============== end:用密钥对原始交易进行签名 ===============//
+
+//=============== begin:WalletFlagInfo ===============//
+//更改钱包的给定钱包标志的状态结果信息
+type WalletFlagInfo struct {
+	Flag_name  string
+	Flag_state bool
+	Warnings   string
+}
+//=============== end:WalletFlagInfo ===============//
+
+//-------------------------------------------------------------------------------------------------------------------------------

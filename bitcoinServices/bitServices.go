@@ -24,6 +24,11 @@ type btcSer struct {
 	Util
 	Wallet
 	Zmq
+	Processps
+	Input
+	Address
+	Obj
+	PrevTx
 }
 
 func GetBC() btcSer {
@@ -1340,3 +1345,47 @@ func (bc btcSer) ListLabels() string {
 	return ""
 }
 //------------------------------end--------------------------------//
+//author : 何新萍
+//设置与给定地址相关联的标签.
+func (w btcSer) SetLabel(address, label string)  {
+	paramsSlice := []interface{}{address, label}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.SETLABEL, paramsSlice)
+
+	//发送请求
+	 Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+}
+
+func (w btcSer) SetTxFee(amount float64) bool {
+	paramsSlice := []interface{}{amount}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.SETTXFEE, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	res, ok := rpcResult.Data.Result.(bool)
+	if ok {
+		return res
+	}
+	return false
+}
+
+func (w btcSer) SetWalletFlag(flag string, value bool) WalletFlagInfo {
+	paramsSlice := []interface{}{flag, value}
+	//RPC通信标椎格JSON式数据
+	rpcNormJson := Rpc.PrepareJSON(utils.SETWALLETFLAG, paramsSlice)
+
+	//bitcoin Core 响应的结果
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+
+	//反序列化操作
+	walletFlagInfo := WalletFlagInfo{}
+	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	if ok {
+		walletFlagInfo.Flag_name = res["flag_name"].(string)
+		walletFlagInfo.Flag_state = res["flag_state"].(bool)
+		walletFlagInfo.Warnings = res["warnings"].(string)
+	}
+	return walletFlagInfo
+}
