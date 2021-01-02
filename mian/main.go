@@ -6,11 +6,6 @@ import (
 )
 
 func main() {
-
-
-	//str := bitcoinServices.GetBC().GetBestBlockHash()
-	//fmt.Println(str)
-
 	beego.SetStaticPath("/js", "./static/js")
 	beego.SetStaticPath("/views", "views")
 	beego.SetStaticPath("/css", "./static/css")

@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"bitcoin-Core/bitcoinServices"
-	"bitcoin-Core/models"
+	"bitcoin-Core/models/user"
 	"fmt"
 	"github.com/astaxie/beego"
 )
@@ -16,7 +16,7 @@ func (l *LoginController) Get() {
 }
 
 func (l *LoginController) Post() {
-	var user models.User
+	var user user.User
 
 	err := l.ParseForm(&user)
 	if err != nil {

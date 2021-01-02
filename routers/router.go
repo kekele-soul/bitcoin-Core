@@ -14,5 +14,7 @@ func init() {
 	//用于注册页面，注册后跳转登录页面
 	beego.Router("/register", &controllers.RegisterController{})
 
+	beego.Router("/bitcoin", &controllers.RpcCommunication{})
+
 	beego.Router("/help",&controllers.Controllers{})
 }

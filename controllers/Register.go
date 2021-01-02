@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"bitcoin-Core/models"
+	"bitcoin-Core/models/user"
 	"fmt"
 	"github.com/astaxie/beego"
 )
@@ -15,7 +15,7 @@ func (r *RegisterController) Get()  {
 }
 
 func (r *RegisterController) Post() {
-	var user models.User
+	var user user.User
 	err := r.ParseForm(&user)
 	if err != nil {
 		r.Ctx.WriteString("用户解析失败")

@@ -21,3 +21,10 @@ type Result struct {
 	Error  error       `json:"error"`
 	Result interface{} `json:"result"`
 }
+
+//前后端通信
+type Communication struct {
+	Url     string
+	Params  string
+	Command string
+}
