@@ -9,6 +9,7 @@ import (
 	"bitcoin-Core/models/rawTransactions"
 	"bitcoin-Core/models/util"
 	"bitcoin-Core/models/wallet"
+	"bitcoin-Core/models/zmq"
 )
 
 type BlockChahin interface {
@@ -397,4 +398,6 @@ type Wallet interface {
 
 //消息队列
 type Zmq interface {
+	//返回有关激活的ZeroMQ通知的信息。
+	GetZmqNotifications() []zmq.ZeroMQ
 }
