@@ -2,9 +2,9 @@ package utils
 
 //Bitcoin Core 配置常量
 const (
-	RPCUSER     = "dudu"
-	RPCPASSWORD = "keaidedudu"
-	RPCURL      = "http://127.0.0.1:10086"
+	RPCUSER     = "user"
+	RPCPASSWORD = "pwd"
+	RPCURL      = "http://127.0.0.1:8332"
 	RPCVERSION  = "2.0"
 )
 
