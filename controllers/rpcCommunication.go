@@ -3,11 +3,13 @@ package controllers
 import (
 	"bitcoin-Core/bitcoinServices"
 	"bitcoin-Core/models/rpc"
+	"bitcoin-Core/utils/structToStr"
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"io/ioutil"
 	"reflect"
+	"strings"
 )
 
 type RpcCommunication struct {
@@ -16,43 +18,44 @@ type RpcCommunication struct {
 
 func (r RpcCommunication) Post() {
 	requestBody := r.Ctx.Request.Body
-	bytes, err2 := ioutil.ReadAll(requestBody)
-	if err2 != nil {
-		fmt.Println(err2)
+	bytes, err := ioutil.ReadAll(requestBody)
+	if err != nil {
+		errStr := fmt.Sprintf("读取请求体出错! err: %s<br>", err)
+		r.Ctx.WriteString(errStr)
+		return
 	}
 	var commit rpc.Communication
-	err := json.Unmarshal(bytes,&commit)
+	err = json.Unmarshal(bytes, &commit)
 	if err != nil {
-		r.Ctx.WriteString("解析错误!") //测试用,,
+		r.Ctx.WriteString("请求体格式错误,反序列化请求体失败!<br>")
 		return
-		//r.Ctx.ResponseWriter.Write()//实际用
 	}
 
 	bc := bitcoinServices.GetBC()
-
 	typeOf := reflect.TypeOf(bc)
 	valueOf := reflect.ValueOf(bc)
 
 	methodName, b := typeOf.MethodByName(commit.Command)
 	if !b {
-		r.Ctx.WriteString("没有该方法!,请重试!") //测试用,,
+		err := fmt.Sprintf("no method: %s<br>", strings.ToLower(commit.Command))
+		r.Ctx.WriteString(err)
 		return
 	}
 
 	args := []reflect.Value{}
-	fmt.Println("方法名为:",methodName.Name)
+	if commit.Params != "" && len(commit.Params) > 7 {
+		params := strings.Replace(commit.Params, "\"", "", -1)
+		params = strings.Replace(commit.Params, " ", "", -1)
+		args = append(args, reflect.ValueOf(params))
+	}
 	name := valueOf.MethodByName(methodName.Name)
 
-	fmt.Printf("%T %v\n", name.Call(args)[0], name.Call(args)[0])
-
-	res := fmt.Sprintf("%v", name.Call(args)[0])
-
-	resJson, err := json.Marshal(res)
-	if err != nil {
-		fmt.Println("反序列化失败!")
-		return
+	rpcRes := name.Call(args)[0]
+	resStr := ""
+	if rpcRes.Kind() == reflect.Struct {
+		resStr = structToStr.ToStr(rpcRes.Interface())
+	} else {
+		resStr = fmt.Sprintf("%v,<br>", rpcRes)
 	}
-	fmt.Println(resJson)
-	r.Ctx.ResponseWriter.Write(resJson)//实际用
-	//r.Ctx.WriteString("成功实现!")
+	r.Ctx.WriteString(resStr)
 }

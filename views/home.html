@@ -1,129 +1,428 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>主页面</title>
-    <link rel="stylesheet" href="../static/css/index.css">
-    <link rel="stylesheet" href="../static/css/home_style.css">
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0;
+            /*background-color: #F5F0E0;*/
+            /*background: #f5f0e0 url(../static/img/background.png) no-repeat;*/
+            list-style-type: none;
+        }
+
+        body {
+            background-color: #F5F0E0;
+        }
+
+        a, img {
+            border: 0;
+        }
+
+        /* nav */
+        .nav {
+            padding: 10px 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 40px 0 0 0;
+        }
+
+        .nav li {
+            float: left;
+            margin-right: 1px;
+            display: inline;
+        }
+
+        .nav li .bi {
+            position: relative;
+            z-index: 0;
+        }
+
+        .nav li .bi:hover {
+            z-index: 99;
+        }
+
+        .nav li .bi:hover span {
+            visibility: visible;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .nav li .bi span {
+            position: absolute;
+            left: -999em;
+            visibility: hidden;
+        }
+
+        .nav li a, .nav li .bi span {
+            height: 24px;
+            line-height: 24px;
+            text-decoration: none;
+            background: #DDDDDD;
+            color: #666666;
+            display: block;
+            width: 80px;
+            text-align: center;
+        }
+
+        .nav li a:hover, .nav li .bi:hover span {
+            color: #FFFFFF;
+            background: #DC4E1B;
+        }
+
+        .navbar {
+            background: #fdd175;
+            height: 8px;
+            overflow: hidden;
+            clear: both;
+        }
+
+        /*vice_nav_div_left*/
+        .vice_nav_div {
+            padding: 0 70px 0;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 50px;
+        }
+
+        .vice_nav_div a {
+            margin-top: 70px;
+            text-decoration: none;
+            color: green;
+        }
+
+        .vice_nav_div .a1 span {
+            visibility: hidden;
+        }
+
+        .vice_nav_div .a2 span {
+            visibility: hidden;
+        }
+
+        /*vice_nav_left*/
+        .vice_nav_left {
+            float: left;
+            padding: 0 5px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .vice_nav_left li {
+            list-style-type: none;
+            margin-top: 70px;
+        }
+
+        .vice_nav_left li a {
+            text-decoration: none;
+            color: #a4be92;
+        }
+
+        .vice_nav_left li .a1 span {
+            visibility: hidden;
+        }
+
+
+        @keyframes slow-wave {
+            from {
+                transform: translateY(0)
+            }
+            to {
+                transform: translateY(-10px)
+            }
+        }
+
+        .sp1 {
+            position: fixed;
+            margin-left: 15px;
+            background-color: #a4be92;
+            display: inline-block;
+            animation-duration: 2s;
+            animation-name: slow-wave;
+            animation-iteration-count: infinite;
+            animation-direction: alternate
+        }
+
+        .sp1 :nth-child(25n+0) {
+            animation-delay: -6s
+        }
+
+        .sp1 :nth-child(25n+1) {
+            animation-delay: -5.76s
+        }
+
+        .sp1 :nth-child(25n+2) {
+            animation-delay: -5.52s
+        }
+
+        .sp1 :nth-child(25n+3) {
+            animation-delay: -5.28s
+        }
+
+        .sp1 :nth-child(25n+4) {
+            animation-delay: -5.04s
+        }
+
+        .sp1 :nth-child(25n+5) {
+            animation-delay: -4.8s
+        }
+
+        .sp1 :nth-child(25n+6) {
+            animation-delay: -4.56s
+        }
+
+        .sp1 :nth-child(25n+7) {
+            animation-delay: -4.32s
+        }
+
+        .sp1 :nth-child(25n+8) {
+            animation-delay: -4.08s
+        }
+
+        .sp1 :nth-child(25n+9) {
+            animation-delay: -3.84s
+        }
+
+        .sp1 :nth-child(25n+10) {
+            animation-delay: -3.6s
+        }
+
+        .sp1 :nth-child(25n+11) {
+            animation-delay: -3.36s
+        }
+
+        .sp1 :nth-child(25n+12) {
+            animation-delay: -3.12s
+        }
+
+        .sp1 :nth-child(25n+13) {
+            animation-delay: -2.88s
+        }
+
+        .sp1 :nth-child(25n+14) {
+            animation-delay: -2.64s
+        }
+
+        .sp1 :nth-child(25n+15) {
+            animation-delay: -2.4s
+        }
+
+        .sp1 :nth-child(25n+16) {
+            animation-delay: -2.16s
+        }
+
+        .sp1 :nth-child(25n+17) {
+            animation-delay: -1.92s
+        }
+
+        .sp1 :nth-child(25n+18) {
+            animation-delay: -1.68s
+        }
+
+        .sp1 :nth-child(25n+19) {
+            animation-delay: -1.44s
+        }
+
+        .sp1 :nth-child(25n+20) {
+            animation-delay: -1.2s
+        }
+
+        .sp1 :nth-child(25n+21) {
+            animation-delay: -.96s
+        }
+
+        .sp1 :nth-child(25n+22) {
+            animation-delay: -.72s
+        }
+
+        .sp1 :nth-child(25n+23) {
+            animation-delay: -.48s
+        }
+
+        .sp1 :nth-child(25n+24) {
+            animation-delay: -.24s
+        }
+
+        /*vice_nav_right*/
+        .vice_nav_right {
+            float: right;
+            padding: 0 5px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .vice_nav_right li {
+            list-style-type: none;
+            margin-top: 70px;
+        }
+
+        .vice_nav_right li a {
+            text-decoration: none;
+            color: #a4be92;
+        }
+
+        .vice_nav_right li .a1 span {
+            visibility: hidden;
+        }
+
+        .sp2 {
+            position: fixed;
+            margin-left: 68%;
+            background-color: #a4be92;
+            display: inline-block;
+            animation-duration: 2s;
+            animation-name: slow-wave;
+            animation-iteration-count: infinite;
+            animation-direction: alternate
+        }
+
+        #title {
+            height: auto;
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+        #p1 {
+            font-size: 30px;
+            margin-left: 43%;
+            opacity: 0.5;
+        }
+
+    </style>
+
 </head>
-<script src="../static/js/jquery.min.js"></script>
-<script src="../static/js/jquery-3.1.1.js"></script>
+
 <body>
-<div id="div1"><!--设置主导航栏-->
-    <ul class="nav1">
-        <li><a href="#">网站首页</a></li>
-        <li><a href="#">关于我们</a></li>
-        <li><a href="#">命令调试</a></li>
-        <li><a href="#">个人信息</a></li>
-        <li><a href="#">联系我们</a></li>
-        <li class="slide1"></li>
-        <li class="slide2"></li>
+<!--navigation bar-->
+<ul class="nav">
+    <li><a class="bi" href="home.html">Home<span>首页</span></a></li>
+    <li><a class="bi" href="about_us.html">About us<span>关于我们</span></a></li>
+    <li><a class="bi" href="introduction.html">Introduction<span>简介</span></a></li>
+    <li><a class="bi" href="member.html">Member<span>成员</span></a></li>
+    <li><a class="bi" href="#" onclick="callMe()">Contact<span>联系我们</span></a></li>
+</ul>
+<div class="navbar"></div>
+
+<div id="title">
+    <p id="p1">命令调试</p>
+</div>
+
+<!--vice navigation bar-->
+<div class="vice_nav_div">
+    <span class="sp1">无参命令</span>
+    <ul class="vice_nav_left">
+        <li>
+            <a class="a1" href="#" onclick="getValueAdd(this)" command="GetBestBlockHash" id="getbestblockhash">getbestblockhash</a>
+        </li>
+        <li>
+            <a class="a1" href="#" onclick="getValueAdd(this)" command="GetBlockChainInfo" id="getblockchaininfo">getblockchaininfo</a>
+        </li>
+        <li>
+            <a class="a1" href="#" onclick="getValueAdd(this)" command="GetBlockCount"
+               id="getblockcount">getblockcount</a>
+        </li>
+        <li>
+            <a class="a2" href="#" onclick="getValueAdd(this)" command="GetNewAddress"
+               id="getnewaddress">getnewaddress</a>
+        </li>
+        <li>
+            <a class="a1" href="#" onclick="getValueAdd(this)" command="GetMempoolInfo" id="getmempoolinfo">getmempoolinfo</a>
+        </li>
+    </ul>
+
+    <span class="sp2">有参命令</span>
+    <ul class="vice_nav_right">
+        <li>
+            <a class="a2" href="#" onclick="getValueDel(this)" command="GetBlockInfoByHash" id="getblock">getblock</a>
+        </li>
+        <li>
+            <a class="a2" href="#" onclick="getValueDel(this)" command="GetBlockHeaderInfoByHash" id="getblockheader">getblockheader</a>
+        </li>
+        <li>
+            <a class="a2" href="#" onclick="getValueDel(this)" command="GetBlockStatsInfoByHash" id="getblockstats">getblockstats</a>
+        </li>
+        <li>
+            <a class="a1" href="#" onclick="getValueDel(this)" command="GetChainTips" id="GetChainTips">getchaintips</a>
+        </li>
+        <li>
+            <a class="a2" href="#" onclick="getValueDel(this)" command="GetNewAddress"
+               id="getnewaddress">getnewaddress</a>
+        </li>
     </ul>
 </div>
-<div><!--设置副导航栏-->
-    <div class="nav2-main">
-        <div class="nav2-box">
-            <div class="nav2">
-                <ul class="nav2-ul">
-                    <li><a href="#" class="develop"><span>首页</span></a></li>
-                    <li><a href="#" class="wechat"><span>Network</span></a></li>
-                    <li><a href="#" class="case"><span>Wallet</span></a></li>
-                    <li><a href="#" class="news"><span>信息资讯</span></a></li>
-                    <li><a href="#" class="contact"><span>关于我们</span></a></li>
-                </ul>
-            </div>
-            <div class="nav2-slide">
-                <div class="nav2-slide-o"></div>
-                <div class="nav2-slide-o">
-                    <ul>
-                        <li><a href="#"><span>getbestblockhash</span></a></li>
-                        <li><a href="#"><span>getblock</span></a></li>
-                        <li><a href="#"><span>getblockchaininfo</span></a></li>
-                        <li id="2"><a href="#"><span>getblockcount</span></a></li>
-                        <li id="1"><a href="#"><span>GetDifficulty</span></a></li>
-                        <li><a href="#"><span>getblockhash</span></a></li>
-                        <li><a href="#"><span>getblockheader</span></a></li>
-                        <li><a href="#"><span>getblockstats</span></a></li>
-                        <li><a href="#"><span>getchaintips</span></a></li>
-                        <li><a href="#"><span>getchaintxstats</span></a></li>
-                    </ul>
-                </div>
-                <div class="nav2-slide-o">
-                    <ul>
-                        <li><a href="#"><span>addnode</span></a></li>
-                        <li ><a href="#"><span>clearbanned</span></a></li>
-                        <li><a href="#"><span>disconnectnode</span></a></li>
-                        <li><a href="#"><span>getaddednodeinfo</span></a></li>
-                        <li><a href="#"><span>getconnectioncount</span></a></li>
-                        <li><a href="#"><span>getnettotals</span></a></li>
-                        <li><a href="#"><span>getnetworkinfo</span></a></li>
-                        <li><a href="#"><span>getpeerinfo</span></a></li>
-                    </ul>
-                </div>
-                <div class="nav2-slide-o">
-                    <ul>
-                        <li><a href="#"><span>abandontransaction</span></a></li>
-                        <li ><a href="#"><span>abortrescan</span></a></li>
-                        <li><a href="#"><span>addmultisigaddress</span></a></li>
-                        <li><a href="#"><span>backupwallet</span></a></li>
-                        <li><a href="#"><span>bumpfee</span></a></li>
-                        <li><a href="#"><span>dumpprivkey</span></a></li>
-                        <li><a href="#"><span>dumpwallet</span></a></li>
-                        <li><a href="#"><span>getaddressinfo</span></a></li>
-                        <li><a href="#"><span>getbalance</span></a></li>
-                    </ul>
-                </div>
-                <div class="nav2-slide-o">
-                    <ul>
-                        <li><a href="#"><span>组长: 刘飞越</span></a></li>
-                        <li><a href="#"><span>组员: 钟友村</span></a></li>
-                        <li><a href="#"><span>组员: 秦梓航</span></a></li>
-                        <li><a href="#"><span>组员: 夏易阳</span></a></li>
-                        <li><a href="#"><span>组员: 陈浩亮</span></a></li>
-                        <li><a href="#"><span>组员: 周承凯</span></a></li>
-                        <li><a href="#"><span>组员: 何新萍</span></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
+
+<div>
+    <div id="div0"
+         style="overflow:auto; border: 10px pink dashed; margin-top: -25px; margin-left: 18%; background-color: #ffd847; width: 900px; height: 470px; opacity: 0.7;">
     </div>
+    <input id="inp1" type="text" value="输入命令"
+           style="position: fixed;margin-top: 20px; width: 700px;  margin-left: 3%;color: grey;">
+    <input id="inp2" type="text" disabled="disabled" value="请添加参数，如遇多参，请用空格分开。"
+           onfocus="if (value =='请添加参数，如遇多参，请用空格分开。'){value =''}"
+           onblur="if (value ==''){value='请添加参数，如遇多参，请用空格分开。'}" value="请添加参数，如遇多参，请用空格分开。"
+           style="position: fixed;margin-top: 50px; width: 700px;  margin-left: 3%;color: grey;">
+    <button type="button" formmethod="post" style="position: fixed; margin-top: 50px;  margin-left: 50%;width: 80px">
+        提交
+    </button>
 </div>
-<div id="div3" style="background-color: black; opacity: 0.7; height: 400px; width: 800px;position: fixed;margin-top: 50%;margin-left: 250px;color: white ">
-
+<div style="text-align:center; font-size: 15px; margin-top: 4.99%;background-color:#a0a571;opacity: 1">
+    <p>&copy; 江西软件职业技术大学-区块链学院 | C190603-F组出审[2020]96号<br>
+        联系方式：17692111675&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qq：1420014281
+    </p>
 </div>
-</body>
-<script src="../static/js/home.js"></script>
-<script src="../static/js/home_script.js"></script>
-<script src="../static/js/ajax.js"></script>
-<script>
+<script type="text/javascript" src="../static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../static/js/getValue.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button").click(function () {
 
-    //TODO 2020/12/28 第三次ajax测试失败
+            // var text = document.get
 
-    var div1 = document.getElementById("1");
-    var div2 = document.getElementById("2");
-    var div3 = document.getElementById("div3");
+            var id = document.getElementById("inp1").value;
+            var para = document.getElementById("inp2").value;
+            console.log("id为:", id);
+            console.log("para为:", para);
 
-    div1.onclick = function () {
+            var element = document.getElementById(id);
+            var command = $(element).attr("command");
+            console.log("方法名:", command);
+            var json = {data: command};
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "http://localhost:8080/TestBitcoin",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/json",
+                    "cache-control": "no-cache",
+                    "postman-token": "13759947-31a9-feca-e6d2-ace5627972d2"
+                },
+                "processData": false,
+                // "data": "{\n    \"Command\": \"" + command + "\"\n    \n}",
+                "data": "{\"Command\": \"" + command + "\",\n\"Params\":\"" + para + "\"}"
+            };
 
-        Ajax("GET", "http://127.0.0.1:8080/views/getBlockCount.html", function (xhr) {
-                div3.innerHTML = xhr.responseText;
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                // var obj = $.parseJSON(response);
+                // var addSpan = obj;
+                var text = document.getElementById("div0");
+                // text.innerHTML=input;
+                var div = document.createElement("div");
+                div.innerHTML = "<br/><span style='display: block; margin-left: 22px'>" +
+                    "<span style='color: #666666;font-size: 18px'>" + "inPut: " + "</span>" +
+                    id + "&nbsp;&nbsp;&nbsp;&nbsp;" + para + "</span>" + "<span style='display: block; margin-left: 22px'>" +
+                    "<span style='color: #666666;font-size: 18px'>" + "outPut: " + "</span>" +
+                    response + "</span><br>";
 
-            }
-            , function (xhr) {
-                alert("请求失败")
+                //TODO 21.1.5 需要三个新的带参命令
+
+                text.appendChild(div)
             });
-    };
-    div2.onclick = function () {
-
-        //$("#second").load("test.txt")
-        Ajax("GET", "http://127.0.0.1:8080/views/test.txt", function (xhr) {
-                div3.innerHTML = xhr.responseText;
-            }
-            , function (xhr) {
-                alert("请求失败")
-
-            });
-
-    };
+        });
+    });
 </script>
+</body>
 </html>

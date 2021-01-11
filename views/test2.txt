@@ -1,7 +1,0 @@
-寒冬瑞雪，敬春日暖阳，愿前路皆知己，故狠随风散，人长安，尽落阳
-<span id="sp1">
-					<input type="checkbox" name="remember" id="remember"
-							style=" "
-
-					>免登陆<br>
-			</span>

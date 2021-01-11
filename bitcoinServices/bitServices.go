@@ -325,7 +325,7 @@ func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockChain.BlockStats
 
 	paramsSlice := []interface{}{height}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON("getblockstats", paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.GETBLOCKSTATS, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -346,10 +346,10 @@ func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockChain.BlockStats
 		blockStats.Time = res["time"].(float64)
 		blockStats.Total_size = res["total_size"].(float64)
 		blockStats.Blockhash = res["blockhash"].(string)
-		blockStats.Feerate_percentiles_, ok = res["feerate_percentiles"].([]interface{})
+		blockStats.Feerate_percentiles, ok = res["feerate_percentiles"].([]interface{})
 		if ok {
-			for i := 0; i < len(blockStats.Feerate_percentiles_); i++ {
-				value, ok := blockStats.Feerate_percentiles_[i].(float64)
+			for i := 0; i < len(blockStats.Feerate_percentiles); i++ {
+				value, ok := blockStats.Feerate_percentiles[i].(float64)
 				if ok {
 					blockStats.Feerate_percentiles = append(blockStats.Feerate_percentiles, value)
 				}
@@ -378,7 +378,7 @@ func (bc btcSer) GetBlockStatsInfoByHeight(height float64) blockChain.BlockStats
 //根据区块Hash获取区块状态
 func (bc btcSer) GetBlockStatsInfoByHash(hash string) blockChain.BlockStats {
 	blockStats := blockChain.BlockStats{}
-	if len(hash) != 64 || hash[0] != 48{
+	if len(hash) != 64 || hash[0] != 48 {
 		return blockStats
 	}
 
@@ -496,6 +496,7 @@ func (bc btcSer) GetMempoolInfo() blockChain.MempoolInfo {
 
 	return mempoolInfo
 }
+
 //----------------------------begin---------------------------------//
 /**
 //author :zck
@@ -530,7 +531,7 @@ func (br btcSer) GetRpcInfo() control.RpcInfo {
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETRPCINFO, paramsSlice)
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.GETRPCINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	//反序列化操作
 	rpcInfo := control.RpcInfo{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
@@ -548,7 +549,7 @@ func (br btcSer) LogGing() control.LogGingInfo {
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.LOGGING, paramsSlice)
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.LOGGING, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	logGingInfo := control.LogGingInfo{}
@@ -587,7 +588,7 @@ func (br btcSer) UpTime() float64 {
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.UPTIME, paramsSlice)
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.GETMININGINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	res, ok := rpcResult.Data.Result.(float64)
 	if ok {
 		return res
@@ -595,14 +596,13 @@ func (br btcSer) UpTime() float64 {
 	return -1
 }
 
-
 //得到矿工信息
 func (br btcSer) GetMiningInfo() mining.MiningInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETMININGINFO, paramsSlice)
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.GETMININGINFO, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	//反序列化操作
 	mininginfo := mining.MiningInfo{}
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
@@ -616,24 +616,31 @@ func (br btcSer) GetMiningInfo() mining.MiningInfo {
 	return mininginfo
 }
 
-func (br btcSer) GetNodeAddresses() network.NodeAddresses {
+func (br btcSer) GetNodeAddresses() []network.NodeAddresses {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETNODEADDRESSES, paramsSlice)
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.GETNODEADDRESSES, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 	//反序列化操作
-	nodeaddresses := network.NodeAddresses{}
-	res, ok := rpcResult.Data.Result.(map[string]interface{})
+	nodeAddressesSlice := make([]network.NodeAddresses, 0)
+	res, ok := rpcResult.Data.Result.([]interface{})
 	if ok {
-		nodeaddresses.Address = res["address"].(string)
-		nodeaddresses.Post = res["post"].(float64)
-		nodeaddresses.Services = res["services"].(float64)
-		nodeaddresses.Time = res["time"].(float64)
+		for i := 0; i < len(res); i++ {
+			resmap, ok := res[i].(map[string]interface{})
+			if ok {
+				nodeaddresses := network.NodeAddresses{}
+				nodeaddresses.Address = resmap["address"].(string)
+				//nodeaddresses.Post = resmap["post"].(float64)
+				nodeaddresses.Services = resmap["services"].(float64)
+				//nodeaddresses.Time = resmap["time"].(float64)
+				nodeAddressesSlice = append(nodeAddressesSlice, nodeaddresses)
+			}
+		}
 	}
-	return nodeaddresses
+	return nodeAddressesSlice
 }
-func (br btcSer) ListBanned() network.ListBanned  {
+func (br btcSer) ListBanned() network.ListBanned {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETNODEADDRESSES, paramsSlice)
@@ -644,7 +651,7 @@ func (br btcSer) ListBanned() network.ListBanned  {
 	res, ok := rpcResult.Data.Result.(map[string]interface{})
 	if ok {
 		listBanned.Address = res["address"].(string)
-		listBanned.Ban_created =res["ban_created"].(float64)
+		listBanned.Ban_created = res["ban_created"].(float64)
 		listBanned.Banned_until = res["banned+until"].(float64)
 	}
 	return listBanned
@@ -658,10 +665,10 @@ func (br btcSer) ListBanned() network.ListBanned  {
 func (bc btcSer) AnalyzePsbt(psbt string) rawTransactions.AnalyzePsbt {
 	paramsSlice := []interface{}{psbt}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.ANALYZEPSBT , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.ANALYZEPSBT, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	analyzePsbt := rawTransactions.AnalyzePsbt{}
@@ -714,10 +721,10 @@ func (bc btcSer) CombineRawTransaction(txs string) string {
 func (bc btcSer) FinalizePsbt(psbting string) rawTransactions.FinalizePsbt {
 	paramsSlice := []interface{}{psbting}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.FINALIZEPSBT , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.FINALIZEPSBT, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult :=Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	finalizePsbt := rawTransactions.FinalizePsbt{}
@@ -739,7 +746,7 @@ func (bc btcSer) ConverttoPsbt(rawTransaction string) string {
 	rpcNormJson := Rpc.PrepareJSON(utils.CONVERTTOPSBT, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult :=Rpc. DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	res, ok := rpcResult.Data.Result.(string)
 	if ok {
@@ -752,7 +759,7 @@ func (bc btcSer) ConverttoPsbt(rawTransaction string) string {
 func (bc btcSer) FundRawTransaction(rawTransaction string) rawTransactions.FundRawTransaction {
 	paramsSlice := []interface{}{rawTransaction}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.FUNDRAWTRANSACTION , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.FUNDRAWTRANSACTION, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -774,7 +781,7 @@ func (bc btcSer) FundRawTransaction(rawTransaction string) rawTransactions.FundR
 func (bc btcSer) SendRawTransaction(rawTransaction string) string {
 	paramsSlice := []interface{}{rawTransaction}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson :=Rpc. PrepareJSON(utils.SENDRAWTRANSACTION, paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.SENDRAWTRANSACTION, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -793,7 +800,7 @@ func (bc btcSer) SignRawTransactionWithKey(pri string) rawTransactions.SignRawTr
 	rpcNormJson := Rpc.PrepareJSON(utils.SIGNRAWTRANSACTIONWITHKEY, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult :=Rpc. DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	signRawTransactionWithKey := rawTransactions.SignRawTransactionWithKey{}
@@ -817,7 +824,6 @@ func (bc btcSer) SignRawTransactionWithKey(pri string) rawTransactions.SignRawTr
 			}
 		}
 
-
 	}
 
 	return signRawTransactionWithKey
@@ -830,7 +836,7 @@ func (bc btcSer) TestMempoolAccept() rawTransactions.TestMempoolAccept {
 	rpcNormJson := Rpc.PrepareJSON(utils.TESTMEMPOOLACCEPT, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc. RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	testMempoolAccept := rawTransactions.TestMempoolAccept{}
@@ -854,10 +860,10 @@ func (bc btcSer) TestMempoolAccept() rawTransactions.TestMempoolAccept {
 }
 
 //创建多重签名需求
-func (bc btcSer) CreateMultisig(nrequired  float64,pubkey string) util.CreateMultiSig {
-	paramsSlice := []interface{}{nrequired,pubkey}
+func (bc btcSer) CreateMultisig(nrequired float64, pubkey string) util.CreateMultiSig {
+	paramsSlice := []interface{}{nrequired, pubkey}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.CREATEMULTISIG , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.CREATEMULTISIG, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -876,7 +882,7 @@ func (bc btcSer) CreateMultisig(nrequired  float64,pubkey string) util.CreateMul
 }
 
 //地址起源
-func (bc btcSer) DeriveAddresses(descriptor  string) string {
+func (bc btcSer) DeriveAddresses(descriptor string) string {
 	paramsSlice := []interface{}{descriptor}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.DERIVEADDRESSES, paramsSlice)
@@ -895,10 +901,10 @@ func (bc btcSer) DeriveAddresses(descriptor  string) string {
 func (bc btcSer) EstimateSmartFee(conf_target float64) util.EstimateSmartFee {
 	paramsSlice := []interface{}{conf_target}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson :=Rpc. PrepareJSON(utils.ESTIMATESMARTFEE , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.ESTIMATESMARTFEE, paramsSlice)
 
 	//bitcoin Core 响应的结果
-	rpcResult := Rpc.DoPost(utils.RPCURL,Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 	//反序列化操作
 	estimateSmartFee := util.EstimateSmartFee{}
@@ -917,7 +923,7 @@ func (bc btcSer) EstimateSmartFee(conf_target float64) util.EstimateSmartFee {
 func (bc btcSer) GetDesCriptorInfo(descriptor string) util.DesCriptorInfo {
 	paramsSlice := []interface{}{descriptor}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.GETDESCRIPTORINFO , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.GETDESCRIPTORINFO, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -938,7 +944,7 @@ func (bc btcSer) GetDesCriptorInfo(descriptor string) util.DesCriptorInfo {
 }
 
 //用私钥对交易进行签名
-func (bc btcSer) SignMessageWithprivKey(privkey  string) string {
+func (bc btcSer) SignMessageWithprivKey(privkey string) string {
 	paramsSlice := []interface{}{privkey}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.SIGNMESSAGEWITHPRIVKEY, paramsSlice)
@@ -957,7 +963,7 @@ func (bc btcSer) SignMessageWithprivKey(privkey  string) string {
 func (bc btcSer) ValidateAddress(address string) util.ValidateAddressInfo {
 	paramsSlice := []interface{}{address}
 	//RPC通信标椎格JSON式数据
-	rpcNormJson := Rpc.PrepareJSON(utils.VALIDATEADDRESS , paramsSlice)
+	rpcNormJson := Rpc.PrepareJSON(utils.VALIDATEADDRESS, paramsSlice)
 
 	//bitcoin Core 响应的结果
 	rpcResult := Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
@@ -1018,7 +1024,6 @@ func (bc btcSer) AddMultisigAddress(nrequried int64, keys []string) wallet.AddMu
 	}
 	return multisigAddress
 }
-
 
 //查询撞的费用
 func (bc btcSer) BumpFee(txId string) wallet.BumpFee {
@@ -1105,8 +1110,6 @@ func (bc btcSer) EncyptWallet(passphrase string) string {
 	}
 	return ""
 }
-
-
 
 //获取地址信息
 func (bc btcSer) GetAddressInfo(address string) wallet.AddressInfo {
@@ -1246,6 +1249,7 @@ func (bc btcSer) GetReceivedByAddress(address string) float64 {
 
 	return -1
 }
+
 //=返回收到标签
 func (bc btcSer) GetReceivedByLabel(label string) float64 {
 	paramsSlice := []interface{}{label}
@@ -1262,6 +1266,7 @@ func (bc btcSer) GetReceivedByLabel(label string) float64 {
 
 	return -1
 }
+
 //返回有未经证实的平衡的比特币
 func (bc btcSer) GetUnconfirmedBalance() float64 {
 	paramsSlice := []interface{}{}
@@ -1278,8 +1283,9 @@ func (bc btcSer) GetUnconfirmedBalance() float64 {
 
 	return -1
 }
+
 //返回钱包信息
-func (bc btcSer) GetWalletInfo()wallet.WalletInfo {
+func (bc btcSer) GetWalletInfo() wallet.WalletInfo {
 	paramsSlice := []interface{}{}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.GETWALLETINFO, paramsSlice)
@@ -1307,6 +1313,7 @@ func (bc btcSer) GetWalletInfo()wallet.WalletInfo {
 
 	return getWallentInfo
 }
+
 //=返回一个重要的地址
 func (bc btcSer) ImportAddress(address string) string {
 	paramsSlice := []interface{}{address}
@@ -1323,6 +1330,7 @@ func (bc btcSer) ImportAddress(address string) string {
 
 	return ""
 }
+
 //返回标签列表
 func (bc btcSer) ListLabels() string {
 	paramsSlice := []interface{}{}
@@ -1339,16 +1347,17 @@ func (bc btcSer) ListLabels() string {
 
 	return ""
 }
+
 //------------------------------end--------------------------------//
 //author : 何新萍
 //设置与给定地址相关联的标签.
-func (w btcSer) SetLabel(address, label string)  {
+func (w btcSer) SetLabel(address, label string) {
 	paramsSlice := []interface{}{address, label}
 	//RPC通信标椎格JSON式数据
 	rpcNormJson := Rpc.PrepareJSON(utils.SETLABEL, paramsSlice)
 
 	//发送请求
-	 Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
+	Rpc.DoPost(utils.RPCURL, Rpc.RequestHeaders(), strings.NewReader(rpcNormJson))
 
 }
 

@@ -123,8 +123,8 @@ type BlockStats struct {
 	Total_weight         float64
 	Totalfee             float64
 	Utxo_increase        float64
-	Feerate_percentiles  []float64
-	Feerate_percentiles_ []interface{}
+	//Feerate_percentiles  []float64
+	Feerate_percentiles []interface{}
 	Maxfee               float64
 	Outs                 float64
 	Subsidy              float64

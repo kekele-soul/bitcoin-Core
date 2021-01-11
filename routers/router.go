@@ -16,5 +16,11 @@ func init() {
 
 	beego.Router("/bitcoin", &controllers.RpcCommunication{})
 
-	beego.Router("/help",&controllers.Controllers{})
+	beego.Router("/introduction", &controllers.IntroductionController{})
+
+	beego.Router("/home", &controllers.HomeController{})
+
+	beego.Router("/about_us", &controllers.About_usControllers{})
+
+	beego.Router("/member", &controllers.MemberController{})
 }

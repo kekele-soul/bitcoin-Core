@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组员介绍</title>
+    <link href="../static/css/nav_style.css">
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0;
+            /*background-color: #F5F0E0;*/
+            /*background: #f5f0e0 url(../static/img/background.png) no-repeat;*/
+            list-style-type: none;
+        }
+        body {
+            background-color: #F5F0E0;
+        }
+        /* nav */
+        .nav {
+            padding: 10px 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 40px 0 0 0;
+        }
+
+        .nav li {
+            float: left;
+            margin-right: 1px;
+            display: inline;
+        }
+
+        .nav li .bi {
+            position: relative;
+            z-index: 0;
+        }
+
+        .nav li .bi:hover {
+            z-index: 99;
+        }
+
+        .nav li .bi:hover span {
+            visibility: visible;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .nav li .bi span {
+            position: absolute;
+            left: -999em;
+            visibility: hidden;
+        }
+
+        .nav li a, .nav li .bi span {
+            height: 24px;
+            line-height: 24px;
+            text-decoration: none;
+            background: #DDDDDD;
+            color: #666666;
+            display: block;
+            width: 80px;
+            text-align: center;
+        }
+
+        .nav li a:hover, .nav li .bi:hover span {
+            color: #FFFFFF;
+            background: #DC4E1B;
+        }
+
+        .navbar {
+            background: #fdd175;
+            height: 8px;
+            overflow: hidden;
+            clear: both;
+        }
+        #title {
+            height: auto;
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+        #p1 {
+            font-size: 30px;
+            margin-left: 40%;
+            opacity: 0.5;
+        }
+        #body {
+            background-color: grey;
+            margin-left: 18%;
+            margin-top: 20px;
+            width: 850px;
+            height: 450px;
+            padding: 20px;
+            overflow:auto;
+        }
+        .member {
+            margin-top: 13px;
+            height: 100px;
+            width: 100%;
+            background-color: #fce69c;
+            color: black;
+            opacity: 0.8;
+
+        }
+        .member img {
+            width: 15%;
+            height: 100%;
+        }
+
+
+
+
+    </style>
+</head>
+<script type="text/javascript" src="../static/js/getValue.js"></script>
+<body>
+<ul class="nav">
+    <li><a class="bi" href="home.html">Home<span>首页</span></a></li>
+    <li><a class="bi" href="about_us.html">About us<span>关于我们</span></a></li>
+    <li><a class="bi" href="introduction.html">Introduction<span>简介</span></a></li>
+    <li><a class="bi" href="member.html">Member<span>成员</span></a></li>
+    <li><a class="bi" href="#" onclick="callMe()">Contact<span>联系我们</span></a></li>
+</ul>
+<div class="navbar"></div>
+
+<div id="title">
+    <p id="p1">F组成员简介及分工</p>
+    <a href="#" style="list-style: none;text-decoration: none;font-size: 10px; float: left; margin-top: 10px" onclick="e()"> 点击加入我们</a>
+</div>
+<div id="body">
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/8.jpg">
+        <p style="float: left; margin-top: 40px">&copy;刘飞越（组长）：主要负责自定义保存用户信息的文件逻辑,以及负责分配小组成员工作。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/10.jpg">
+        <p style="float: left; margin-top: 40px">&copy;钟友村（大佬）：主要负责后端代码维护以及rpc通信，和保存用户信息的文件部分逻辑。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/9.jpg">
+        <p style="float: left; margin-top: 40px">&copy;秦梓航：主要负责前端页面，jQuery的ajax方法对页面进行局部刷新以及部分前后端交互部分。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/12.jpg">
+        <p style="float: left; margin-top: 40px">&copy;夏易阳：主要负责比特币钱包的功能命令封装与维护（部分钱包命令封装）。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/14.jpg">
+        <p style="float: left; margin-top: 40px">&copy;陈浩亮：主要负责比特币钱包的功能命令封装与维护（原始交易命令与工具类命令的封装）。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/13.jpg">
+        <p style="float: left; margin-top: 40px">&copy;周承凯：主要负责比特币钱包的功能命令封装与维护（控制、生产、矿工、网络部分命令封装）。
+        </p>
+    </div>
+    <div class="member">
+        <img style="float:left; margin-right: 4px" src="../static/img/11.jpg">
+        <p style="float: left; margin-top: 40px;font-size: 14px">&copy;何新萍：主要负责比特币钱包的功能命令封装与维护（部分钱包命令封装），以及部分页面UI设计。
+        </p>
+    </div>
+
+</div>
+<div style="text-align:center; font-size: 15px; margin-top: 5.3%;background-color:#a0a571;opacity: 1">
+    <p>&copy; 江西软件职业技术大学-区块链学院 | C190603-F组出审[2020]96号<br>
+        联系方式：17692111675&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qq：1420014281
+    </p>
+</div>
+</body>
+<script>
+    function e() {
+        alert("是否要加入我们小组?");
+        if(true){
+            alert("既然你都点了，那么欢迎加入F组！")
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目简介</title>
+    <link href="../static/css/nav_style.css">
+    <style>
+        * {
+            margin: 0 auto;
+            padding: 0;
+            /*background-color: #F5F0E0;*/
+            /*background: #f5f0e0 url(../static/img/background.png) no-repeat;*/
+            list-style-type: none;
+        }
+
+        body {
+            background-color: #F5F0E0;
+        }
+
+        /* nav */
+        .nav {
+            padding: 10px 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 40px 0 0 0;
+        }
+
+        .nav li {
+            float: left;
+            margin-right: 1px;
+            display: inline;
+        }
+
+        .nav li .bi {
+            position: relative;
+            z-index: 0;
+        }
+
+        .nav li .bi:hover {
+            z-index: 99;
+        }
+
+        .nav li .bi:hover span {
+            visibility: visible;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .nav li .bi span {
+            position: absolute;
+            left: -999em;
+            visibility: hidden;
+        }
+
+        .nav li a, .nav li .bi span {
+            height: 24px;
+            line-height: 24px;
+            text-decoration: none;
+            background: #DDDDDD;
+            color: #666666;
+            display: block;
+            width: 80px;
+            text-align: center;
+        }
+
+        .nav li a:hover, .nav li .bi:hover span {
+            color: #FFFFFF;
+            background: #DC4E1B;
+        }
+
+        .navbar {
+            background: #fdd175;
+            height: 8px;
+            overflow: hidden;
+            clear: both;
+        }
+
+        #title {
+            height: auto;
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+
+        #p1 {
+            font-size: 30px;
+            margin-left: 37%;
+            opacity: 0.5;
+        }
+
+        #body {
+            background-color: grey;
+            overflow: auto;
+            margin-left: 20%;
+            margin-top: 20px;
+            width: 850px;
+            height: 450px;
+            padding: 20px;
+        }
+
+        #body p {
+            color: #fec23e;
+        }
+
+
+    </style>
+</head>
+<script type="text/javascript" src="../static/js/getValue.js"></script>
+<body>
+<ul class="nav">
+    <li><a class="bi" href="home.html">Home<span>首页</span></a></li>
+    <li><a class="bi" href="about_us.html">About us<span>关于我们</span></a></li>
+    <li><a class="bi" href="introduction.html">Introduction<span>简介</span></a></li>
+    <li><a class="bi" href="member.html">Member<span>成员</span></a></li>
+    <li><a class="bi" href="#" onclick="callMe()">Contact<span>联系我们</span></a></li>
+</ul>
+<div class="navbar"></div>
+
+<div id="title">
+    <p id="p1">F组 Bitcoin Core 项目简介</p>
+</div>
+<div id="body">
+    <p>核心功能：<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;主要功能为：跟比特币核心客户端进行rpc通信，将通信返回值展示在页面上。用于更好的提供学习和测试功能。<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;优点：简洁、方便查询。有利于学习。<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;注明：此版本为1.0版本，部分功能有待开发。<br>
+    </p>
+    <br>
+    <br>
+    <p>特别注明：本程序只针对，对于比特币客户端有所了解并且希望深入了解的开发者使用</p>
+    <br>
+    <br>
+    <p>基础功能：<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;基础功能：与比特币核心客户端进行rpc，目前仅可调用部分方法进行展示。展示内容仅作为1.0版展示。<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;优点：简洁、方便查询。有利于学习。<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;注明：此版本为1.0版本，部分功能有待开发。<br>
+    </p>
+</div>
+<div style="text-align:center; font-size: 15px; margin-top: 5.3%;background-color:#a0a571;opacity: 1">
+    <p>&copy; 江西软件职业技术大学-区块链学院 | C190603-F组出审[2020]96号<br>
+        联系方式：17692111675&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; qq：1420014281
+    </p>
+</div>
+</body>
+</html>

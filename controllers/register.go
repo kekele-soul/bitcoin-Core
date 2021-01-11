@@ -25,6 +25,7 @@ func (r *RegisterController) Post() {
 	err = user.SaveUser()
 	if err != nil {
 		fmt.Println(err.Error())
+		r.Data["err"] = fmt.Sprintf("注册失败! %s", err)
 		r.Ctx.WriteString("注册失败")
 		return
 	}
